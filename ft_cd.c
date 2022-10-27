@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:19:47 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/10/25 18:50:43 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:06:26 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,21 @@ char	*ft_go_to_parent(char *path)
 	int		slash_count;
 	int		slashes;
 
-	index = 0;
+	index = -1;
 	slash_count = 0;
 	slashes = 0;
-	while (path[index])
-	{
+	while (path[++index])
 		if (path[index] == '/')
 			slash_count++;
-		index++;
-	}
-	index = 0;
+	index = -1;
 	destination = malloc(sizeof(char) * ft_find_dest_len(path));
-	while (path[index] && slashes < slash_count)
+	while (path[++index] && slashes < slash_count)
 	{
 		if (slashes + 1 == slash_count && path[index] == '/')
 			break ;
 		destination[index] = path[index];
 		if (path[index] == '/')
 			slashes++;
-		index++;
 	}
 	destination[index] = '\0';
 	return (destination);

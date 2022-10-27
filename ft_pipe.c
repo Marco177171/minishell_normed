@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:19:47 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/25 19:04:37 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:24:54 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ int	ft_check_redirection(char **word_struct)
 	index = 0;
 	while (word_struct[index])
 	{
+		if (ft_find_quotes(word_struct[index]) == 1)
+		{
+			index++;
+			while (ft_find_quotes(word_struct[index]) != 1)
+				index++;
+		}
 		if (strncmp(word_struct[index], ">>\0", 3) == 0
 			|| strncmp(word_struct[index], ">\0", 2) == 0
 			|| strncmp(word_struct[index], "<<\0", 3) == 0
@@ -29,7 +35,7 @@ int	ft_check_redirection(char **word_struct)
 	return (0);
 }
 
-void	ft_manage_pipes(t_command *command_struct, char **envp)
+void	ft_manage_pipes(t_command *c_s, char **envp)
 {
 	int	index;
 	int	pipes[2];
@@ -40,29 +46,29 @@ void	ft_manage_pipes(t_command *command_struct, char **envp)
 	stdin_cpy = dup(0);
 	stdout_cpy = dup(1);
 	index = 0;
-	pid = malloc(sizeof(int) * command_struct->total_pipes);
-	while (index < command_struct->total_pipes)
+	pid = malloc(sizeof(int) * c_s->total_pipes);
+	while (index < c_s->total_pipes)
 	{
 		pipe(pipes);
-		command_struct->word_matrix = ft_split(command_struct->pipe_matrix[index], ' ');
-		ft_remove_quotes(command_struct->word_matrix[0]);
+		c_s->word_matrix = ft_split(c_s->pipe_matrix[index], ' ');
+		ft_remove_quotes(c_s->word_matrix[0]);
 		pid[index] = fork();
 		if (pid[index] == 0)
 		{
-			if (ft_check_redirection(command_struct->word_matrix) == 1)
+			if (ft_check_redirection(c_s->word_matrix) == 1)
 			{
 				close(pipes[0]);
-				ft_redirect(command_struct, index, envp);
+				ft_redirect(c_s, index, envp);
 				exit(0);
 			}
 			else
 			{
 				close(pipes[0]);
-				if (index == command_struct->total_pipes - 1)
+				if (index == c_s->total_pipes - 1)
 					dup2(stdout_cpy, STDOUT_FILENO);
 				else
 					dup2(pipes[1], STDOUT_FILENO);
-				ft_recognize_command(command_struct, index, envp);
+				ft_recognize_command(c_s, index, envp);
 				exit(0);
 			}
 		}
@@ -71,7 +77,7 @@ void	ft_manage_pipes(t_command *command_struct, char **envp)
 			dup2(pipes[0], STDIN_FILENO);
 			close(pipes[0]);
 			close(pipes[1]);
-			ft_free_matrix(command_struct->word_matrix);
+			ft_free_matrix(c_s->word_matrix);
 		}
 		index++;
 	}
@@ -79,9 +85,9 @@ void	ft_manage_pipes(t_command *command_struct, char **envp)
 	close(stdin_cpy);
 	close(stdout_cpy);
 	index = -1;
-	while (++index < command_struct->total_pipes)
+	while (++index < c_s->total_pipes)
 		waitpid(pid[index], 0, 0);
 	free(pid);
-	free(command_struct->command_string);
-	ft_free_matrix(command_struct->pipe_matrix);
+	free(c_s->command_string);
+	ft_free_matrix(c_s->pipe_matrix);
 }

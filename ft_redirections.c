@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:45:04 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 16:22:51 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:04:46 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ char	*ft_update_pipe_text(char *pipe)
 	return (updated);
 }
 
-void	ft_redirect_and_execute(t_command *command_struct, int pipe_index, char **envp, int fd, int stdoutcpy)
+void	ft_redirect_and_execute(t_command *c_s, int p_i, char **envp, int fd, int stdoutcpy)
 {
-	command_struct->pipe_matrix[pipe_index] = ft_update_pipe_text(command_struct->pipe_matrix[pipe_index]);
-	command_struct->word_matrix = ft_decrease_word_matrix(command_struct->word_matrix);
+	c_s->pipe_matrix[p_i] = ft_update_pipe_text(c_s->pipe_matrix[p_i]);
+	c_s->word_matrix = ft_decrease_word_matrix(c_s->word_matrix);
 	close(STDOUT_FILENO);
 	dup2(fd, STDOUT_FILENO);
-	ft_recognize_command(command_struct, pipe_index, envp);
+	ft_recognize_command(c_s, p_i, envp);
 	dup2(stdoutcpy, STDOUT_FILENO);
 	close(fd);
 }

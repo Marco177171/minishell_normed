@@ -6,13 +6,13 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 18:22:55 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/25 18:55:46 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:31:41 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_print_dollar(char *str, int fd)
+int	ft_print_doll(char *str, int fd)
 {
 	char	env_var_name[1024];
 	int		env_var_len;
@@ -21,7 +21,8 @@ int	ft_print_dollar(char *str, int fd)
 
 	env_var_len = 0;
 	index = 0;
-	if (str[index + 1] == '"' || str[index + 1] == ' ' || str[index + 1] == '$' || str[index + 1] == '\0')
+	if (str[index + 1] == '"' || str[index + 1] == ' '
+		|| str[index + 1] == '$' || str[index + 1] == '\0')
 		return (write(fd, &str[index], 1));
 	else
 	{
@@ -32,7 +33,8 @@ int	ft_print_dollar(char *str, int fd)
 			ft_print_exit();
 			return (index);
 		}
-		while (str[index] != ' ' && str[index] && str[index] != '"' && str[index] != '$' && str[index] != '\'' && str[index])
+		while (str[index] != ' ' && str[index] && str[index] != '"'
+			&& str[index] != '$' && str[index] != '\'' && str[index])
 		{
 			env_var_name[env_var_len] = str[index];
 			index++;
@@ -91,51 +93,58 @@ char	*ft_adjust_pipe(char *pipe)
 	return (new_pipe);
 }
 
-int	ft_echo(t_command *command_struct, int pipe_index)
+int	ft_echo(t_command *c_s, int p_i)
 {
-	int	index;
+	int	i;
 	int	flag;
 
-	index = 0;
+	i = 0;
 	flag = 0;
-	command_struct->pipe_matrix[pipe_index] = ft_adjust_pipe(command_struct->pipe_matrix[pipe_index]);
-	if (ft_check_quote(command_struct->pipe_matrix[pipe_index]) == 1)
+	c_s->pipe_matrix[p_i] = ft_adjust_pipe(c_s->pipe_matrix[p_i]);
+	if (ft_check_quote(c_s->pipe_matrix[p_i]) == 1)
 	{
-		while (command_struct->pipe_matrix[pipe_index][index] == ' ')
-			index++;
-		index += 4;
-		while (command_struct->pipe_matrix[pipe_index][index] == ' ' || command_struct->pipe_matrix[pipe_index][index] == '-')
+		while (c_s->pipe_matrix[p_i][i] == ' ')
+			i++;
+		i += 4;
+		while (c_s->pipe_matrix[p_i][i] == ' '
+			|| c_s->pipe_matrix[p_i][i] == '-')
 		{
-			if (command_struct->pipe_matrix[pipe_index][index] == '-' && command_struct->pipe_matrix[pipe_index][index + 1] == 'n' && (command_struct->pipe_matrix[pipe_index][index + 2] == ' ' || command_struct->pipe_matrix[index + 2] == '\0'))
+			if (c_s->pipe_matrix[p_i][i] == '-'
+				&& c_s->pipe_matrix[p_i][i + 1] == 'n'
+				&& (c_s->pipe_matrix[p_i][i + 2] == ' '
+				|| c_s->pipe_matrix[i + 2] == '\0'))
 			{
-				index += 3;
+				i += 3;
 				flag = 1;
 			}
-			else if (command_struct->pipe_matrix[pipe_index][index] == '-' && command_struct->pipe_matrix[pipe_index][index] != 'n')
+			else if (c_s->pipe_matrix[p_i][i] == '-'
+				&& c_s->pipe_matrix[p_i][i] != 'n')
 				break ;
 			else
-				index++;
+				i++;
 		}
-		while (command_struct->pipe_matrix[pipe_index][index])
+		while (c_s->pipe_matrix[p_i][i])
 		{
-			while (command_struct->pipe_matrix[pipe_index][index] == ' ' && command_struct->pipe_matrix[pipe_index][index + 1] == ' ')
-				index++;
-			if (command_struct->pipe_matrix[pipe_index][index] == '\'')
-				index += ft_print_single_quote(command_struct->pipe_matrix[pipe_index] + index, command_struct->write_fd);
-			else if (command_struct->pipe_matrix[pipe_index][index] == '"')
-				index += ft_print_double_quote(command_struct->pipe_matrix[pipe_index] + index, command_struct->write_fd);
-			else if (command_struct->pipe_matrix[pipe_index][index] == '$')
-				index += (ft_print_dollar(command_struct->pipe_matrix[pipe_index] + index, command_struct->write_fd));
-			else if (command_struct->pipe_matrix[pipe_index][index] == '>' || command_struct->pipe_matrix[pipe_index][index] == '<')
+			while (c_s->pipe_matrix[p_i][i] == ' '
+				&& c_s->pipe_matrix[p_i][i + 1] == ' ')
+				i++;
+			if (c_s->pipe_matrix[p_i][i] == '\'')
+				i += ft_print_single(c_s->pipe_matrix[p_i] + i, c_s->write_fd);
+			else if (c_s->pipe_matrix[p_i][i] == '"')
+				i += ft_print_double(c_s->pipe_matrix[p_i] + i, c_s->write_fd);
+			else if (c_s->pipe_matrix[p_i][i] == '$')
+				i += (ft_print_doll(c_s->pipe_matrix[p_i] + i, c_s->write_fd));
+			else if (c_s->pipe_matrix[p_i][i] == '>'
+				|| c_s->pipe_matrix[p_i][i] == '<')
 				break ;
 			else
 			{
-				write(command_struct->write_fd, &command_struct->pipe_matrix[pipe_index][index], 1);
-				index++;
+				write(c_s->write_fd, &c_s->pipe_matrix[p_i][i], 1);
+				i++;
 			}
 		}
 		if (flag == 0)
-			write(command_struct->write_fd, "\n", 1);
+			write(c_s->write_fd, "\n", 1);
 		*g_exit_status = 0;
 		return (0);
 	}

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 11:39:05 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/10/27 17:31:10 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_print_single_quote(char *string, int fd)
+int	ft_print_single(char *string, int fd)
 {
 	int	index;
 
@@ -26,7 +26,7 @@ int	ft_print_single_quote(char *string, int fd)
 	return (index);
 }
 
-int	ft_print_double_quote(char *string, int fd)
+int	ft_print_double(char *string, int fd)
 {
 	int	index;
 
@@ -34,7 +34,7 @@ int	ft_print_double_quote(char *string, int fd)
 	while (string[index] != '"')
 	{
 		if (string[index] == '$')
-			index += ft_print_dollar(string + index, fd);
+			index += ft_print_doll(string + index, fd);
 		else
 		{
 			write(fd, &string[index], 1);
@@ -56,42 +56,27 @@ void	ft_print_exit(void)
 
 int	ft_check_quote(char *str)
 {
-	int	index;
-	int	flag;
+	int		index;
+	int		flag;
+	char	quote;
 
-	index = 0;
+	index = -1;
 	flag = 1;
-	while (str[index])
+	while (str[++index])
 	{
-		if (str[index] == '\'')
+		if (str[index] == '\'' || str[index] == '\"')
 		{
 			flag *= -1;
-			index++;
-			while (str[index])
+			quote = str[index];
+			while (str[++index])
 			{
-				if (str[index] == '\'')
+				if (str[index] == quote)
 				{
 					flag *= -1;
 					break ;
 				}
-				index++;
 			}
 		}
-		else if (str[index] == '\"')
-		{
-			flag *= -1;
-			index++;
-			while (str[index])
-			{
-				if (str[index] == '\"')
-				{
-					flag *= -1;
-					break ;
-				}
-				index++;
-			}
-		}
-		index++;
 	}
 	return (flag);
 }

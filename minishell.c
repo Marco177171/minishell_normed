@@ -3,36 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 11:07:51 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/10/27 18:16:19 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_recognize_command(t_command *command_struct, int pipe_index, char **envp)
+int	ft_recognize_command(t_command *c_s, int p_i, char **envp)
 {
-	if (ft_strcmp("echo", command_struct->word_matrix[0]) == 0)
-		return (ft_echo(command_struct, pipe_index));
-	else if (ft_strcmp("cd", command_struct->word_matrix[0]) == 0)
-		return (ft_cd(command_struct));
-	else if (ft_strcmp("pwd", command_struct->word_matrix[0]) == 0)
+	if (ft_strcmp("echo", c_s->word_matrix[0]) == 0)
+		return (ft_echo(c_s, p_i));
+	else if (ft_strcmp("cd", c_s->word_matrix[0]) == 0)
+		return (ft_cd(c_s));
+	else if (ft_strcmp("pwd", c_s->word_matrix[0]) == 0)
 		return (ft_pwd());
-	else if (ft_strcmp("export", command_struct->word_matrix[0]) == 0)
-		return (ft_export(command_struct, envp));
-	else if (ft_strcmp("unset", command_struct->word_matrix[0]) == 0)
-		return (ft_unset(command_struct, envp));
-	else if (ft_strcmp("env", command_struct->word_matrix[0]) == 0)
-		return (ft_env(command_struct, envp));
-	else if (ft_strcmp("exit", command_struct->word_matrix[0]) == 0)
+	else if (ft_strcmp("export", c_s->word_matrix[0]) == 0)
+		return (ft_export(c_s, envp));
+	else if (ft_strcmp("unset", c_s->word_matrix[0]) == 0)
+		return (ft_unset(c_s, envp));
+	else if (ft_strcmp("env", c_s->word_matrix[0]) == 0)
+		return (ft_env(c_s, envp));
+	else if (ft_strcmp("exit", c_s->word_matrix[0]) == 0)
 	{
-		ft_exit(command_struct);
+		ft_exit(c_s);
 		return (0);
 	}
 	else
-		ft_other_commands(command_struct, envp);
+		ft_other_commands(c_s, envp);
 	return (0);
 }
 

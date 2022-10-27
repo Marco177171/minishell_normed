@@ -6,89 +6,11 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 10:59:12 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/25 19:02:58 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:55:37 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**ft_create_envp2(char **envp)
-{
-	int		index;
-	char	**envp2;
-
-	index = 0;
-	while (envp[index])
-		index++;
-	envp2 = malloc(sizeof(char *) * index + 1);
-	envp2[index] = NULL;
-	if (!envp2)
-		return (NULL);
-	index = 0;
-	while (envp[index])
-	{
-		envp2[index] = ft_strdup(envp[index]);
-		index++;
-	}
-	return (envp2);
-}
-
-void	ft_print_envp2(char **envp2)
-{
-	int		i;
-	char	**couple;
-
-	i = 0;
-	while (envp2[i])
-	{
-		if (ft_check_equal_presence(envp2[i]) == 0)
-			printf("declare -x %s\n", envp2[i]);
-		else
-		{
-			couple = ft_split(envp2[i], '=');
-			if (couple[1] == NULL)
-				printf("declare -x %s=\"\"\n", couple[0]);
-			else
-				printf("declare -x %s=\"%s\"\n", couple[0], couple[1]);
-			ft_free_matrix(couple);
-		}
-		i++;
-	}
-}
-
-int	ft_buble_sort_env(char **envp)
-{
-	int		length;
-	int		i;
-	int		j;
-	char	*tmp;
-	char	**envp2;
-
-	length = 0;
-	i = 0;
-	tmp = 0;
-	envp2 = ft_create_envp2(envp);
-	while (envp2[length])
-		length++;
-	while (envp2[i])
-	{
-		j = i + 1;
-		while (envp2[j])
-		{
-			if (ft_strcmp(envp2[i], envp2[j]) > 0)
-			{
-				tmp = envp2[i];
-				envp2[i] = envp2[j];
-				envp2[j] = tmp;
-			}
-			j++;
-		}
-		i++;
-	}
-	ft_print_envp2(envp2);
-	ft_free_matrix(envp2);
-	return (0);
-}
 
 int	ft_check_equal_presence(char *string)
 {
@@ -149,44 +71,37 @@ int	ft_check_char(char *str)
 	return (1);
 }
 
-int	ft_export(t_command *command_struct, char **envp)
+int	ft_export(t_command *c_s, char **envp)
 {
-	int	matrix_index;
+	int	m_i;
 	int	modified_flag;
 	int	exit_flag;
 
-	matrix_index = 1;
+	m_i = 0;
 	exit_flag = 0;
-	if (command_struct->word_matrix[1] && ft_strncmp(command_struct->word_matrix[1], ">>\0", 3) != 0
-		&& ft_strncmp(command_struct->word_matrix[1], ">\0", 2) != 0
-		&& ft_strncmp(command_struct->word_matrix[1], "<<\0", 3) != 0
-		&& ft_strncmp(command_struct->word_matrix[1], "<\0", 2) != 0)
+	if (c_s->word_matrix[1] && ft_strncmp(c_s->word_matrix[1], ">>\0", 3) != 0
+		&& ft_strncmp(c_s->word_matrix[1], ">\0", 2) != 0
+		&& ft_strncmp(c_s->word_matrix[1], "<<\0", 3) != 0
+		&& ft_strncmp(c_s->word_matrix[1], "<\0", 2) != 0)
 	{
-		while (command_struct->word_matrix[matrix_index])
+		while (c_s->word_matrix[++m_i])
 		{
 			modified_flag = 0;
-			if (ft_check_char(command_struct->word_matrix[matrix_index]) == 0)
+			if (ft_check_char(c_s->word_matrix[m_i]) == 0)
 			{
-				if (ft_check_equal_presence(command_struct->word_matrix[matrix_index]) == 1)
+				if (ft_check_equal_presence(c_s->word_matrix[m_i]) == 1)
 				{
-					modified_flag = ft_modify_var(command_struct->word_matrix[matrix_index], envp);
+					modified_flag = ft_modify_var(c_s->word_matrix[m_i], envp);
 					if (modified_flag == 0)
-						ft_append_new_key(envp, command_struct->word_matrix[matrix_index]);
-					matrix_index++;
+						ft_append_new_key(envp, c_s->word_matrix[m_i]);
 				}
 				else
-				{
-					ft_append_new_key(envp, command_struct->word_matrix[matrix_index]);
-					matrix_index++;
-				}
+					ft_append_new_key(envp, c_s->word_matrix[m_i]);
 			}
 			else
 			{
-				write(2, "minishell: export: '", 20);
-				write(2, command_struct->word_matrix[matrix_index], ft_strlen(command_struct->word_matrix[matrix_index]));
-				write(2, "': not a valild identifier\n", 27);
+				ft_export_error(c_s->word_matrix[m_i]);
 				exit_flag = 1;
-				matrix_index++;
 			}
 		}
 		if (exit_flag == 0)
