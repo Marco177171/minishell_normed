@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 18:16:19 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:28:43 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,65 +180,65 @@ int	ft_check_syntax(char *command)
 	return (0);
 }
 
-void	ft_execute_cycle(t_command *command_struct, char **envp)
+void	ft_execute_cycle(t_command *c_s, char **envp)
 {
 	char	*swap;
 	char	*sub_readline;
 
 	swap = NULL;
 	sub_readline = NULL;
-	command_struct->command_string = readline("minishell$ ");
-	if (!command_struct->command_string)
+	c_s->command_string = readline("minishell$ ");
+	if (!c_s->command_string)
 		ft_exit_on_signal();
-	if (command_struct->command_string[0] != '\0')
+	if (c_s->command_string[0] != '\0')
 	{
-		if (ft_check_syntax(command_struct->command_string) == 1)
+		if (ft_check_syntax(c_s->command_string) == 1)
 		{
-			free(command_struct->command_string);
+			free(c_s->command_string);
 			return ;
 		}
-		else if (ft_check_syntax(command_struct->command_string) == 2)
+		else if (ft_check_syntax(c_s->command_string) == 2)
 		{
-			while (ft_check_syntax(command_struct->command_string) == 2)
+			while (ft_check_syntax(c_s->command_string) == 2)
 			{
 				sub_readline = readline("> ");
-				swap = ft_strjoin(command_struct->command_string, sub_readline);
-				free(command_struct->command_string);
-				command_struct->command_string = ft_strdup(swap);
+				swap = ft_strjoin(c_s->command_string, sub_readline);
+				free(c_s->command_string);
+				c_s->command_string = ft_strdup(swap);
 				free(swap);
 				free(sub_readline);
-				if (ft_check_syntax(command_struct->command_string) == 1)
+				if (ft_check_syntax(c_s->command_string) == 1)
 				{
-					free(command_struct->command_string);
+					free(c_s->command_string);
 					return ;
 				}
 			}
 		}
-		add_history(command_struct->command_string);
-		command_struct->total_pipes = ft_count_pipes(command_struct->command_string);
-		command_struct->pipe_matrix = ft_split_pipes(command_struct->command_string, '|');
-		if (command_struct->total_pipes > 1)
-			ft_manage_pipes(command_struct, envp);
+		add_history(c_s->command_string);
+		c_s->total_pipes = ft_count_pipes(c_s->command_string);
+		c_s->pipe_matrix = ft_split_pipes(c_s->command_string, '|');
+		if (c_s->total_pipes > 1)
+			ft_manage_pipes(c_s, envp);
 		else
 		{
-			command_struct->word_matrix = ft_split(command_struct->pipe_matrix[0], ' ');
-			ft_remove_quotes(command_struct->word_matrix[0]);
-			if (ft_check_redirection(command_struct->word_matrix) == 1)
+			c_s->word_matrix = ft_split(c_s->pipe_matrix[0], ' ');
+			ft_remove_quotes(c_s->word_matrix[0]);
+			if (ft_check_redirection(c_s->word_matrix) == 1)
 			{
-				ft_redirect(command_struct, 0, envp);
-				ft_free_matrix(command_struct->word_matrix);
-				ft_free_matrix(command_struct->pipe_matrix);
-				free(command_struct->command_string);
+				ft_redirect(c_s, 0, envp);
+				ft_free_matrix(c_s->word_matrix);
+				ft_free_matrix(c_s->pipe_matrix);
+				free(c_s->command_string);
 				return ;
 			}
-			ft_recognize_command(command_struct, 0, envp);
-			ft_free_matrix(command_struct->word_matrix);
-			ft_free_matrix(command_struct->pipe_matrix);
-			free(command_struct->command_string);
+			ft_recognize_command(c_s, 0, envp);
+			ft_free_matrix(c_s->word_matrix);
+			ft_free_matrix(c_s->pipe_matrix);
+			free(c_s->command_string);
 		}
 	}
 	else
-		free(command_struct->command_string);
+		free(c_s->command_string);
 }
 
 int	main(int ac, char **av, char **envp)

@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 18:25:58 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/27 18:43:33 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char		**ft_split_pipes(const char *s, char c);
 
 // REDIRECTIONS
 int			ft_check_redirection(char **word_struct);
-void		ft_redirect(t_command *command_struct, int index, char **envp);
+void		ft_redirect(t_command *c_s, int p_i, char **envp);
 int			ft_find_quotes(char *word);
 
 // ECHO
