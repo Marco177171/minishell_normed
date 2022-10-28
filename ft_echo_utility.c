@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 19:18:18 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 19:55:07 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,7 @@ char	*ft_adjust_pipe(char *pipe)
 		index++;
 	}
 	while (pipe[index])
-	{
-		new_pipe[result_index] = pipe[index];
-		result_index++;
-		index++;
-	}
+		new_pipe[result_index++] = pipe[index++];
 	new_pipe[result_index] = '\0';
 	free(pipe);
 	return (new_pipe);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 16:55:42 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/10/28 19:57:17 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,6 +201,7 @@ void	ft_execute_cycle(t_command *c_s, char **envp)
 		}
 		if (ft_check_syntax(c_s->command_string) == 1)
 		{
+			add_history(c_s->command_string);
 			free(c_s->command_string);
 			return ;
 		}
