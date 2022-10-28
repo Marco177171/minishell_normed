@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 18:28:43 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 16:55:42 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,13 @@ void	ft_execute_cycle(t_command *c_s, char **envp)
 		ft_exit_on_signal();
 	if (c_s->command_string[0] != '\0')
 	{
+		if (ft_check_quote(c_s->command_string) != 1)
+		{
+			add_history(c_s->command_string);
+			printf("error: close your quotes\n");
+			free(c_s->command_string);
+			return ;
+		}
 		if (ft_check_syntax(c_s->command_string) == 1)
 		{
 			free(c_s->command_string);
