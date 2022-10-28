@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility_2.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:26:53 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/10/28 15:27:33 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/10/28 16:28:05 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,29 @@ int	ft_check_quote(char *str)
 	int		flag;
 	char	quote;
 
-	index = -1;
+	index = 0;
 	flag = 1;
-	while (str[++index])
+	// printf("checking %s\n", str);
+	while (str[index])
 	{
+		// printf("char: %c\n", str[index]);
 		if (str[index] == '\'' || str[index] == '\"')
 		{
+			// printf("in\n");
 			flag *= -1;
 			quote = str[index];
-			while (str[++index])
+			while (str[index])
 			{
 				if (str[index] == quote)
 				{
 					flag *= -1;
 					break ;
 				}
+				index++;
 			}
 		}
+		index++;
+		// printf("index = %d\n", index);
 	}
 	return (flag);
 }

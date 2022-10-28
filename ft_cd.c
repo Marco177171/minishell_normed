@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:19:47 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/10/27 17:06:26 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:46:55 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,8 @@ int	ft_cd(t_command *command_struct)
 	}
 	else
 	{
-		chdir(command_struct->word_matrix[1]);
+		if (chdir(command_struct->word_matrix[1]) != 0)
+			ft_arg_not_found(command_struct->word_matrix[1]);
 		return (*g_exit_status);
 	}
 }
