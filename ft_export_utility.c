@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utility.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:40:00 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 17:55:14 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:34:06 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,13 @@ void	ft_print_envp2(char **envp2)
 		}
 		i++;
 	}
+}
+
+int	ft_check_char(char *str)
+{
+	if ((str[0] >= 65 && str[0] <= 90) || (str[0] >= 97 && str[0] <= 122))
+		return (0);
+	return (1);
 }
 
 int	ft_buble_sort_env(char **envp)

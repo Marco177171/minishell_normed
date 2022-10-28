@@ -3,80 +3,92 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 17:31:10 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:31:47 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_print_single(char *string, int fd)
+int	ft_print_doll(char *str, int fd)
 {
-	int	index;
+	char	env_var_name[1024];
+	int		env_var_len;
+	int		index;
+	char	*env;
 
-	index = 1;
-	while (string[index] != '\'')
+	env_var_len = 0;
+	index = 0;
+	if (str[index + 1] == '"' || str[index + 1] == ' '
+		|| str[index + 1] == '$' || str[index + 1] == '\0')
+		return (write(fd, &str[index], 1));
+	else
 	{
-		write(fd, &string[index], 1);
 		index++;
-	}
-	index++;
-	return (index);
-}
-
-int	ft_print_double(char *string, int fd)
-{
-	int	index;
-
-	index = 1;
-	while (string[index] != '"')
-	{
-		if (string[index] == '$')
-			index += ft_print_doll(string + index, fd);
-		else
+		if (str[index] == '?')
 		{
-			write(fd, &string[index], 1);
 			index++;
+			ft_print_exit();
+			return (index);
 		}
+		while (str[index] != ' ' && str[index] && str[index] != '"'
+			&& str[index] != '$' && str[index] != '\'' && str[index])
+		{
+			env_var_name[env_var_len] = str[index];
+			index++;
+			env_var_len++;
+		}
+		env_var_name[env_var_len] = '\0';
+		env = getenv(env_var_name);
+		if (env != NULL)
+			write(fd, env, strlen(env));
+		else if (!env_var_name[0])
+			write(fd, "$", 1);
 	}
-	index++;
 	return (index);
 }
 
-void	ft_print_exit(void)
-{
-	char	*status;
-
-	status = ft_itoa(*g_exit_status);
-	write (1, status, ft_strlen(status));
-	free(status);
-}
-
-int	ft_check_quote(char *str)
+char	*ft_adjust_pipe(char *pipe)
 {
 	int		index;
-	int		flag;
-	char	quote;
+	int		result_index;
+	char	*new_pipe;
 
-	index = -1;
-	flag = 1;
-	while (str[++index])
+	index = 0;
+	result_index = 0;
+	while (pipe[index])
+		index++;
+	new_pipe = malloc (sizeof(char) * index);
+	index = 0;
+	while (pipe[index])
 	{
-		if (str[index] == '\'' || str[index] == '\"')
+		if (pipe[index] == ' ')
+			index++;
+		else
 		{
-			flag *= -1;
-			quote = str[index];
-			while (str[++index])
+			while (pipe[index] != ' ')
 			{
-				if (str[index] == quote)
+				if (pipe[index] == '\'' || pipe[index] == '\"')
+					index++;
+				else
 				{
-					flag *= -1;
-					break ;
+					new_pipe[result_index] = pipe[index];
+					result_index++;
+					index++;
 				}
 			}
+			break ;
 		}
 	}
-	return (flag);
+	while (pipe[index])
+	{
+		new_pipe[result_index] = pipe[index];
+		result_index++;
+		index++;
+	}
+	new_pipe[result_index] = '\0';
+	free(pipe);
+	return (new_pipe);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 10:59:12 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 17:55:37 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:34:02 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,6 @@ int	ft_append_new_key(char **envp, char *new_key)
 	envp[index] = ft_strdup(new_key);
 	envp[index + 1] = NULL;
 	return (0);
-}
-
-int	ft_check_char(char *str)
-{
-	if ((str[0] >= 65 && str[0] <= 90) || (str[0] >= 97 && str[0] <= 122))
-		return (0);
-	return (1);
 }
 
 int	ft_export(t_command *c_s, char **envp)

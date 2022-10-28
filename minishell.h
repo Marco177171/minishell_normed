@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 18:43:33 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:38:28 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void		ft_manage_signals(void);
 int			ft_modify_var(char *new_couple, char **envp);
 void		ft_exit_on_signal(void);
 
-// CD UTILITY
+// CD
+int			ft_cd(t_command *command_struct);
 int			ft_find_dest_len(char *path);
 int			ft_find_home_len(char *path);
 
@@ -76,22 +77,26 @@ int			ft_find_quotes(char *word);
 
 // ECHO
 int			ft_echo(t_command *c_s, int p_i);
+int			ft_print_doll(char *str, int fd);
+char		*ft_adjust_pipe(char *pipe);
 int			ft_check_quote(char *str);
 void		ft_print_exit(void);
 int			ft_print_double(char *string, int fd);
 int			ft_print_single(char *string, int fd);
-int			ft_print_doll(char *str, int fd);
 
 // BUILTINS
 int			ft_pwd(void);
 void		ft_exit(t_command *c_s);
-int			ft_cd(t_command *command_struct);
 int			ft_env(t_command *command_struct, char **envp);
-int			ft_export(t_command *command_struct, char **envp);
 int			ft_unset(t_command *command_struct, char **envp);
 
-// EXPORT UTILITIES
+// EXPORT
+int			ft_export(t_command *command_struct, char **envp);
 int			ft_buble_sort_env(char **envp);
+int			ft_check_char(char *str);
+void		ft_print_envp2(char **envp2);
+char		**ft_create_envp2(char **envp);
+void		ft_export_error(char *identifier);
 
 // OTHER COMMANDS
 int			ft_other_commands(t_command *command_struct, char **envp);
