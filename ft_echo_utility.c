@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 19:55:07 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/29 18:30:40 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,38 +50,36 @@ int	ft_print_doll(char *str, int fd)
 	return (index);
 }
 
+int	ft_fill_new_pipe(char c)
+{
+	if (c == ' ')
+		return (0);
+	else if (c == '\'' || c == '\"')
+		return (1);
+	else
+		return (2);
+}
+
 char	*ft_adjust_pipe(char *pipe)
 {
 	int		index;
+	int		found;
 	int		result_index;
 	char	*new_pipe;
 
-	index = 0;
+	found = 0;
 	result_index = 0;
-	while (pipe[index])
-		index++;
-	new_pipe = malloc (sizeof(char) * index);
 	index = 0;
-	while (pipe[index])
+	new_pipe = malloc (sizeof(char) * ft_strlen(pipe));
+	while (pipe[index++])
 	{
-		if (pipe[index] == ' ')
-			index++;
-		else
-		{
-			while (pipe[index] != ' ')
-			{
-				if (pipe[index] == '\'' || pipe[index] == '\"')
-					index++;
-				else
-				{
-					new_pipe[result_index] = pipe[index];
-					result_index++;
-					index++;
-				}
-			}
+		if (found == 1 && ft_fill_new_pipe(pipe[index]) == 0)
 			break ;
+		if (ft_fill_new_pipe(pipe[index]) == 2)
+		{
+			found = 1;
+			new_pipe[result_index++] = pipe[index];
 		}
-		index++;
 	}
 	while (pipe[index])
 		new_pipe[result_index++] = pipe[index++];
@@ -89,3 +87,22 @@ char	*ft_adjust_pipe(char *pipe)
 	free(pipe);
 	return (new_pipe);
 }
+
+// if (pipe[index] == ' ')
+// 	index++;
+// else
+// {
+// 	while (pipe[index] != ' ')
+// 	{
+// 		if (pipe[index] == '\'' || pipe[index] == '\"')
+// 			index++;
+// 		else
+// 		{
+// 			new_pipe[result_index] = pipe[index];
+// 			result_index++;
+// 			index++;
+// 		}
+// 	}
+// 	break ;
+// }
+// index++;
