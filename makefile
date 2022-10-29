@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+         #
+#    By: masebast <masebast@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 17:02:28 by masebast          #+#    #+#              #
-#    Updated: 2022/10/27 10:57:37 by gmeoli           ###   ########.fr        #
+#    Updated: 2022/10/29 17:06:12 by masebast         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 SRCS = *.c
 LIBFT = libft/libft.a
-FLAGS = -Werror -Wextra -Wall -L/usr/include -lreadline -L$$HOME/.brew/opt/readline/lib -I $$HOME/.brew/opt/readline/include/readline
+FLAGS = -Werror -Wextra -Wall -g -L/usr/include -lreadline -L$$HOME/.brew/opt/readline/lib -I $$HOME/.brew/opt/readline/include/readline
 
 $(NAME):
 		make -C libft

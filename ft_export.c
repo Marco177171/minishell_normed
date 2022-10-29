@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 10:59:12 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 17:51:14 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/29 17:15:46 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,34 @@ int	ft_append_new_key(char **envp, char *new_key)
 	return (0);
 }
 
+int	ft_modify_append(char **envp, char **words, int index, int *modified_flag)
+{
+	int	exit_flag;
+
+	exit_flag = 0;
+	while (words[++index])
+	{
+		*modified_flag = 0;
+		if (ft_check_char(words[index]) == 0)
+		{
+			if (ft_check_equal_presence(words[index]) == 1)
+			{
+				*modified_flag = ft_modify_var(words[index], envp);
+				if (*modified_flag == 0)
+					ft_append_new_key(envp, words[index]);
+			}
+			else
+				ft_append_new_key(envp, words[index]);
+		}
+		else
+		{
+			ft_export_error(words[index]);
+			exit_flag = 1;
+		}
+	}
+	return (exit_flag);
+}
+
 int	ft_export(t_command *c_s, char **envp)
 {
 	int	m_i;
@@ -77,26 +105,7 @@ int	ft_export(t_command *c_s, char **envp)
 		&& ft_strncmp(c_s->word_matrix[1], "<<\0", 3) != 0 \
 		&& ft_strncmp(c_s->word_matrix[1], "<\0", 2) != 0)
 	{
-		while (c_s->word_matrix[++m_i])
-		{
-			modified_flag = 0;
-			if (ft_check_char(c_s->word_matrix[m_i]) == 0)
-			{
-				if (ft_check_equal_presence(c_s->word_matrix[m_i]) == 1)
-				{
-					modified_flag = ft_modify_var(c_s->word_matrix[m_i], envp);
-					if (modified_flag == 0)
-						ft_append_new_key(envp, c_s->word_matrix[m_i]);
-				}
-				else
-					ft_append_new_key(envp, c_s->word_matrix[m_i]);
-			}
-			else
-			{
-				ft_export_error(c_s->word_matrix[m_i]);
-				exit_flag = 1;
-			}
-		}
+		exit_flag = ft_modify_append(envp, c_s->word_matrix, 0, &modified_flag);
 		if (exit_flag == 0)
 			*g_exit_status = 0;
 		else
