@@ -6,71 +6,45 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/29 19:20:29 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/30 17:40:58 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_doll_arg(char *c, int *index, int fd)
+void	ft_doll_arg(char *str, int *index, int fd)
 {
 	char	env_var_name[1024];
 	int		env_var_len;
 	char	*env;
 
 	env_var_len = 0;
-	if (*c++ == '?')
+	if (str[*index] == '?')
 	{
-		c++;
 		ft_print_exit();
 		return ;
 	}
-	while (*c != ' ' && *c && *c != '"'
-		&& *c != '$' && *c != '\'' && *c)
-		env_var_name[env_var_len++] = *c++;
+	while (str[*index] != ' ' && str[*index] && str[*index] != '"'
+		&& str[*index] != '$' && str[*index] != '\'' && str[*index])
+		env_var_name[env_var_len++] = str[(*index)++];
 	env_var_name[env_var_len] = '\0';
 	env = getenv(env_var_name);
 	if (env != NULL)
-	{
 		write(fd, env, strlen(env));
-		return ;
-	}
 	else if (!env_var_name[0])
 		write(fd, "$", 1);
-	return ;
 }
 
 int	ft_print_doll(char *str, int fd)
 {
-	// char	env_var_name[1024];
-	// int		env_var_len;
 	int		index;
-	// char	*env;
 
-	// env_var_len = 0;
-	index = 0;
-	if (str[index + 1] == '"' || str[index + 1] == ' '
-		|| str[index + 1] == '$' || str[index + 1] == '\0')
+	index = 1;
+	if (str[index] == '"' || str[index] == ' '
+		|| str[index] == '$' || str[index] == '\0')
 		return (write(fd, &str[index], 1));
 	else
-	{
-		ft_doll_arg(&str[index], &index, fd);
-		// if (str[++index] == '?')
-		// {
-		// 	index++;
-		// 	ft_print_exit();
-		// 	return (index);
-		// }
-		// while (str[index] != ' ' && str[index] && str[index] != '"'
-		// 	&& str[index] != '$' && str[index] != '\'' && str[index])
-		// 	env_var_name[env_var_len++] = str[index++];
-		// env_var_name[env_var_len] = '\0';
-		// env = getenv(env_var_name);
-		// if (env != NULL)
-		// 	write(fd, env, strlen(env));
-		// else if (!env_var_name[0])
-		// 	write(fd, "$", 1);
-	}
+		ft_doll_arg(str, &index, fd);
 	return (index);
 }
 
