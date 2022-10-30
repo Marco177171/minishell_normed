@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/30 17:40:58 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:43:21 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ft_doll_arg(char *str, int *index, int fd)
 	env_var_len = 0;
 	if (str[*index] == '?')
 	{
+		(*index)++;
 		ft_print_exit();
 		return ;
 	}

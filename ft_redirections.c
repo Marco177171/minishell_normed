@@ -6,21 +6,30 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:45:04 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 18:42:46 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/30 18:31:09 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void print_matrix(char **matrix)
+{
+	int index;
+
+	index = 0;
+	while (matrix[index++])
+		printf("new: %s\n", matrix[index]);
+}
+
 char	**ft_decrease_word_matrix(char **word_matrix)
 {
 	int		index;
+	int		found;
 	int		temp_index;
 	char	**temp_matrix;
-	int		flag ;
 
 	index = 0;
-	flag = 1;
+	found = 0;
 	while (word_matrix[index])
 		index++;
 	temp_matrix = malloc(sizeof(char *) * index);
@@ -28,11 +37,15 @@ char	**ft_decrease_word_matrix(char **word_matrix)
 	temp_index = 0;
 	while (word_matrix[index])
 	{
-		if (ft_strncmp(word_matrix[index], ">>\0", 3) == 0
+		printf("old matrix: %s\n", word_matrix[index]);
+		if ((ft_strncmp(word_matrix[index], ">>\0", 3) == 0
 			|| ft_strncmp(word_matrix[index], ">\0", 2) == 0
 			|| ft_strncmp(word_matrix[index], "<<\0", 3) == 0
-			|| ft_strncmp(word_matrix[index], "<\0", 2) == 0)
+			|| ft_strncmp(word_matrix[index], "<\0", 2) == 0) && found != 1)
+		{
+			found = 1;
 			index += 2;
+		}
 		else
 		{
 			temp_matrix[temp_index] = ft_strdup(word_matrix[index]);
@@ -41,6 +54,7 @@ char	**ft_decrease_word_matrix(char **word_matrix)
 		}
 	}
 	temp_matrix[temp_index] = NULL;
+	print_matrix(temp_matrix);
 	ft_free_matrix(word_matrix);
 	return (temp_matrix);
 }
