@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 19:57:17 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:00:47 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,56 +41,27 @@ void	ft_remove_quotes(char *command)
 	int		index;
 	int		res_index;
 	char	*result;
+	char	quote;
 
-	index = 0;
+	index = -1;
 	res_index = 0;
 	if (ft_check_quote(command) == 1)
 	{
-		while (command[index])
-			index++;
-		result = malloc(sizeof(char) * index);
-		index = 0;
-		while (command[index])
+		result = malloc(sizeof(char) * ft_strlen(command) + 1);
+		while (command[++index])
 		{
-			if (command[index] == '"')
+			if (command[index] == '"' || command[index] == '\'')
 			{
-				index++;
-				while (command[index] != '"')
-				{
-					result[res_index] = command[index];
-					res_index++;
-					index++;
-				}
-				index++;
-			}
-			if (command[index] == '\'')
-			{
-				index++;
-				while (command[index] != '\'')
-				{
-					result[res_index] = command[index];
-					res_index++;
-					index++;
-				}
-				index++;
+				quote = command[index];
+				while (command[++index] != quote)
+					result[res_index++] = command[index];
 			}
 			else
-			{
-				result[res_index] = command[index];
-				res_index++;
-				index++;
-			}
+				result[res_index++] = command[index];
 		}
 		result[res_index] = '\0';
 		free (command);
-		command = malloc(sizeof(char) * res_index + 1);
-		res_index = 0;
-		while (result[res_index])
-		{
-			command[res_index] = result[res_index];
-			res_index++;
-		}
-		command[res_index] = '\0';
+		command = ft_strdup(result);
 		free(result);
 		return ;
 	}

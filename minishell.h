@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 15:38:28 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/10/31 16:10:44 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,16 @@ char		**ft_split_pipes(const char *s, char c);
 int			ft_check_redirection(char **word_struct);
 void		ft_redirect(t_command *c_s, int p_i, char **envp);
 int			ft_find_quotes(char *word);
+void		ft_redirect_output(t_command *c_s, int p_i, char **envp, int *index);
+void		ft_trunc(t_command *c_s, int p_i, char **envp, int outcpy, int *i);
+void		ft_append(t_command *c_s, int p_i, char **envp, int outcpy, int *i);
+void		ft_redirect_input(t_command *c_s, int p_i, char **envp, int *index);
+void		ft_input_redirect(t_command *c_s, int p_i, char **envp, int incpy, int *i);
+void		ft_heredoc(t_command *c_s, int p_i, char **envp, int incpy, int *i);
+char		*ft_remove_heredoc(char *pipe);
+char		**ft_decrease_word_matrix(char **word_matrix);
+char		*ft_update_pipe_text(char *pipe);
+void		ft_red_exe(t_command *c_s, int p_i, char **envp, int fd, int stdoutcpy);
 
 // ECHO
 int			ft_echo(t_command *c_s, int p_i);
