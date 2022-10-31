@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:45:04 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/31 18:55:51 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:15:03 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,69 +53,19 @@ char	*ft_update_pipe_text(char *pipe)
 {
 	int		index;
 	int		count;
+	char	quote;
 	char	*updated;
 
+	updated = malloc(sizeof(char) * ft_strlen(pipe));
 	index = 0;
 	count = 0;
 	while (pipe[index])
 	{
-		if (pipe[index] == '\'')
+		if (pipe[index] == '\'' || pipe[index] == '"')
 		{
-			index++;
-			count++;
-			while (pipe[index] != '\'')
-			{
-				index++;
-				count++;
-			}
-			index++;
-			count++;
-		}
-		else if (pipe[index] == '"')
-		{
-			index++;
-			count++;
-			while (pipe[index] != '"')
-			{
-				index++;
-				count++;
-			}
-			index++;
-			count++;
-		}
-		else if (pipe[index] == '>' || pipe[index] == '<')
-		{
-			index++;
-			while (pipe[index] != ' ' && pipe[index])
-				index++;
-			while (pipe[index] == ' ' && pipe[index])
-				index++;
-			while (pipe[index] != ' ' && pipe[index])
-				index++;
-		}
-		else
-		{
-			count++;
-			index++;
-		}
-	}
-	updated = malloc(sizeof(char) * count + 1);
-	updated[count] = '\0';
-	index = 0;
-	count = 0;
-	while (pipe[index])
-	{
-		if (pipe[index] == '\'')
-		{
+			quote = pipe[index];
 			updated[count++] = pipe[index++];
-			while (pipe[index] != '\'')
-				updated[count++] = pipe[index++];
-			updated[count++] = pipe[index++];
-		}
-		else if (pipe[index] == '"')
-		{
-			updated[count++] = pipe[index++];
-			while (pipe[index] != '"')
+			while (pipe[index] != quote)
 				updated[count++] = pipe[index++];
 			updated[count++] = pipe[index++];
 		}
@@ -130,12 +80,9 @@ char	*ft_update_pipe_text(char *pipe)
 				index++;
 		}
 		else
-		{
-			updated[count] = pipe[index];
-			count++;
-			index++;
-		}
+			updated[count++] = pipe[index++];
 	}
+	updated[count] = '\0';
 	free(pipe);
 	return (updated);
 }
