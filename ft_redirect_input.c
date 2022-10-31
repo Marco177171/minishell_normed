@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:40 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/31 18:45:48 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:50:00 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,8 +76,8 @@ void	ft_heredoc(t_command *c_s, int p_i, char **envp, int incpy, int *i)
 
 void	ft_input_redirect(t_command *c_s, int p_i, char **envp, int incpy, int *i)
 {
-    int fd;
-    
+	int	fd;
+
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
@@ -97,13 +97,13 @@ void	ft_input_redirect(t_command *c_s, int p_i, char **envp, int incpy, int *i)
 	close(fd);
 }
 
-void    ft_redirect_input(t_command *c_s, int p_i, char **envp, int *index)
+void	ft_redirect_input(t_command *c_s, int p_i, char **envp, int *index)
 {
-    int stdincpy;
+	int	stdincpy;
 
-    stdincpy = dup(0);
-    if (ft_strcmp(c_s->word_matrix[(*index)], "<<") == 0)
-        ft_heredoc(c_s, p_i, envp, stdincpy, index);
-    else if (ft_strcmp(c_s->word_matrix[(*index)], "<") == 0)
-        ft_input_redirect(c_s, p_i, envp, stdincpy, index);
+	stdincpy = dup(0);
+	if (ft_strcmp(c_s->word_matrix[(*index)], "<<") == 0)
+		ft_heredoc(c_s, p_i, envp, stdincpy, index);
+	else if (ft_strcmp(c_s->word_matrix[(*index)], "<") == 0)
+		ft_input_redirect(c_s, p_i, envp, stdincpy, index);
 }
