@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:40 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/31 16:12:25 by masebast         ###   ########.fr       */
+/*   Updated: 2022/10/31 18:45:48 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ char	*ft_remove_heredoc(char *pipe)
 	while (pipe[index] != '<')
 		index++;
 	updated = malloc(sizeof(char) * index + 1);
-	index = 0;
-	while (pipe[index] != '<')
-	{
+	index = -1;
+	while (pipe[++index] != '<')
 		updated[index] = pipe[index];
-		index++;
-	}
 	updated[index] = '\0';
 	free(pipe);
 	return (updated);
