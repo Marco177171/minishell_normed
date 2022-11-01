@@ -6,16 +6,18 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:28 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/31 15:44:27 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:25:28 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_append(t_command *c_s, int p_i, char **envp, int outcpy, int *i)
+void	ft_append(t_command *c_s, int p_i, char **envp, int *i)
 {
+	int	outcpy;
 	int	fd;
 
+	outcpy = dup(1);
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
@@ -25,10 +27,12 @@ void	ft_append(t_command *c_s, int p_i, char **envp, int outcpy, int *i)
 	ft_red_exe(c_s, p_i, envp, fd, outcpy);
 }
 
-void	ft_trunc(t_command *c_s, int p_i, char **envp, int outcpy, int *i)
+void	ft_trunc(t_command *c_s, int p_i, char **envp, int *i)
 {
+	int	outcpy;
 	int	fd;
-	
+
+	outcpy = dup(1);
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
@@ -40,11 +44,8 @@ void	ft_trunc(t_command *c_s, int p_i, char **envp, int outcpy, int *i)
 
 void ft_redirect_output(t_command *c_s, int p_i, char **envp, int *index)
 {
-	int stdoutcpy;
-
-	stdoutcpy = dup(1);
 	if (ft_strcmp(c_s->word_matrix[(*index)], ">>") == 0)
-		ft_append(c_s, p_i, envp, stdoutcpy, index);
+		ft_append(c_s, p_i, envp, index);
 	else if (ft_strcmp(c_s->word_matrix[(*index)], ">") == 0)
-		ft_trunc(c_s, p_i, envp, stdoutcpy, index);
+		ft_trunc(c_s, p_i, envp, index);
 }

@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:40 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/31 18:50:00 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:45:07 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,12 @@ char	*ft_remove_heredoc(char *pipe)
 	return (updated);
 }
 
-void	ft_heredoc(t_command *c_s, int p_i, char **envp, int incpy, int *i)
+void	ft_heredoc(t_command *c_s, int p_i, char **envp, int *i)
 {
 	char	*interrupter;
 	char	*sub_readline;
 	int		pipes[2];
 
-	incpy = 0;
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
@@ -74,20 +73,23 @@ void	ft_heredoc(t_command *c_s, int p_i, char **envp, int incpy, int *i)
 	}
 }
 
-void	ft_input_redirect(t_command *c_s, int p_i, char **envp, int incpy, int *i)
+void	ft_input_redirect(t_command *c_s, int p_i, char **envp, int *i)
 {
 	int	fd;
+	int	incpy;
 
+	incpy = dup(0);
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
 		return ;
 	}
 	fd = open(c_s->word_matrix[(*i) + 1], O_RDWR, 0644);
-	if (!fd)
+	if (fd == -1)
 	{
 		ft_arg_not_found(c_s->word_matrix[(*i)]);
 		*g_exit_status = 1;
+		return ;
 	}
 	c_s->word_matrix = ft_decrease_word_matrix(c_s->word_matrix);
 	close(STDIN_FILENO);
@@ -99,11 +101,8 @@ void	ft_input_redirect(t_command *c_s, int p_i, char **envp, int incpy, int *i)
 
 void	ft_redirect_input(t_command *c_s, int p_i, char **envp, int *index)
 {
-	int	stdincpy;
-
-	stdincpy = dup(0);
 	if (ft_strcmp(c_s->word_matrix[(*index)], "<<") == 0)
-		ft_heredoc(c_s, p_i, envp, stdincpy, index);
+		ft_heredoc(c_s, p_i, envp, index);
 	else if (ft_strcmp(c_s->word_matrix[(*index)], "<") == 0)
-		ft_input_redirect(c_s, p_i, envp, stdincpy, index);
+		ft_input_redirect(c_s, p_i, envp, index);
 }

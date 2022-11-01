@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/31 17:09:24 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 15:31:33 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ int	main(int ac, char **av, char **envp)
 		ft_init_struct(&command_struct);
 		ft_modify_var(command_struct.current_shell_level, envp);
 		ft_ctrl_c(envp);
+		*g_exit_status = 0;
 		while (TRUE)
 		{
 			ft_manage_signals();
