@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:40 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 16:24:15 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:14:30 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	ft_input_redirect(t_command *c_s, int p_i, char **envp, int *i)
 	fd = open(c_s->word_matrix[(*i) + 1], O_RDWR, 0644);
 	if (fd == -1)
 	{
-		ft_arg_not_found(c_s->word_matrix[(*i)]);
+		ft_arg_not_found(c_s->word_matrix[(*i) + 1]);
 		*g_exit_status = 1;
 		return ;
 	}

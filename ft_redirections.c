@@ -6,46 +6,66 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:45:04 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 16:24:31 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:56:43 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**ft_decrease_word_matrix(char **word_matrix)
+void	ft_new_matrix(char **w_m, int *i, char **temp_matrix, int *temp_index)
 {
-	int		index;
-	int		found;
-	int		temp_index;
-	char	**temp_matrix;
+	int	found;
 
-	index = 0;
 	found = 0;
-	while (word_matrix[index])
-		index++;
-	temp_matrix = malloc(sizeof(char *) * index);
-	index = 0;
-	temp_index = 0;
-	while (word_matrix[index])
+	while (w_m[(*i)])
 	{
-		if ((ft_strncmp(word_matrix[index], ">>\0", 3) == 0
-				|| ft_strncmp(word_matrix[index], ">\0", 2) == 0
-				|| ft_strncmp(word_matrix[index], "<<\0", 3) == 0
-				|| ft_strncmp(word_matrix[index], "<\0", 2) == 0)
-			&& found != 1)
+		if ((ft_strcmp(w_m[(*i)], ">>") == 0 \
+			|| ft_strcmp(w_m[(*i)], ">") == 0 \
+			|| ft_strcmp(w_m[(*i)], "<<") == 0 \
+			|| ft_strcmp(w_m[(*i)], "<") == 0) && found != 1)
 		{
 			found = 1;
-			index += 2;
+			(*i) += 2;
 		}
 		else
 		{
-			temp_matrix[temp_index] = ft_strdup(word_matrix[index]);
-			temp_index++;
-			index++;
+			temp_matrix[(*temp_index)++] = ft_strdup(w_m[(*i)]);
+			(*i)++;
 		}
 	}
-	temp_matrix[temp_index] = NULL;
-	ft_free_matrix(word_matrix);
+	temp_matrix[(*temp_index)] = NULL;
+}
+
+char	**ft_decrease_word_matrix(char **w_m)
+{
+	int		i;
+	int		temp_index;
+	char	**temp_matrix;
+
+	i = 0;
+	while (w_m[i])
+		i++;
+	temp_matrix = malloc(sizeof(char *) * i);
+	i = 0;
+	temp_index = 0;
+	ft_new_matrix(w_m, &i, temp_matrix, &temp_index);
+	// while (w_m[i])
+	// {
+	// 	if ((ft_strcmp(w_m[i], ">>") == 0 || ft_strcmp(w_m[i], ">") == 0 \
+	// 		|| ft_strcmp(w_m[i], "<<") == 0 || ft_strcmp(w_m[i], "<") == 0) \
+	// 		&& found != 1)
+	// 	{
+	// 		found = 1;
+	// 		i += 2;
+	// 	}
+	// 	else
+	// 	{
+	// 		temp_matrix[temp_index++] = ft_strdup(w_m[i]);
+	// 		i++;
+	// 	}
+	// }
+	// temp_matrix[temp_index] = NULL;
+	ft_free_matrix(w_m);
 	return (temp_matrix);
 }
 
