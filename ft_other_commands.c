@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:29:07 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/29 17:46:24 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:02:52 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,24 @@ int	ft_execute_sub_process(t_command *c_s, char **envp)
 	return (0);
 }
 
+void	ft_nephew(t_command *c_s, char **mypath, int *index, char **envp)
+{
+	char	*path;
+
+	path = getenv("PATH");
+	path = ft_strjoin(mypath[(*index)], c_s->word_matrix[0]);
+	if (access(path, R_OK) == 0)
+		*g_exit_status = execve(path, c_s->word_matrix, envp);
+	else if (strncmp(c_s->word_matrix[0], "./", 2) == 0)
+	{
+		*g_exit_status = ft_execute_sub_process(c_s, envp);
+		exit(*g_exit_status);
+	}
+	else
+		*g_exit_status = execve(c_s->word_matrix[0], c_s->word_matrix, envp);
+	free(path);
+}
+
 void	ft_child(t_command *c_s, char **envp)
 {
 	int		index;
@@ -31,24 +49,11 @@ void	ft_child(t_command *c_s, char **envp)
 	path = getenv("PATH");
 	mypath = ft_split(path, ':');
 	index = -1;
-	*g_exit_status = 0;
 	while (mypath[++index])
 		mypath[index] = ft_strjoin(mypath[index], "/");
 	index = -1;
 	while (mypath[++index])
-	{
-		path = ft_strjoin(mypath[index], c_s->word_matrix[0]);
-		if (access(path, R_OK) == 0)
-			*g_exit_status = execve(path, c_s->word_matrix, envp);
-		else if (strncmp(c_s->word_matrix[0], "./", 2) == 0)
-		{
-			*g_exit_status = ft_execute_sub_process(c_s, envp);
-			exit(*g_exit_status);
-		}
-		else
-			*g_exit_status = execve(c_s->word_matrix[0], c_s->word_matrix, envp);
-		free(path);
-	}
+		ft_nephew(c_s, mypath, &index, envp);
 	if (*g_exit_status != 0)
 		ft_command_not_found(c_s->word_matrix[0]);
 	exit(*g_exit_status);

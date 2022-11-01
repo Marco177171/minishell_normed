@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:03:21 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/27 18:12:05 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:30:49 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ char	**ft_create_freed_copy(char **envp, int index)
 	char	**result;
 
 	i = 0;
-	while (envp[i])
-		i++;
+	while (envp[i++])
 	result = malloc(sizeof(char *) * i - 1);
 	result[i - 1] = NULL;
 	i = 0;
@@ -33,11 +32,7 @@ char	**ft_create_freed_copy(char **envp, int index)
 			i++;
 		}
 		else
-		{
-			result[j] = envp[i];
-			i++;
-			j++;
-		}
+			result[j++] = envp[i++];
 	}
 	return (result);
 }
@@ -77,15 +72,11 @@ int	ft_unset(t_command *command_struct, char **envp)
 		if (copy == envp)
 			return (1);
 		index = 0;
-		while (copy[index])
-			index++;
+		while (copy[index++])
 		envp[index] = NULL;
 		index = 0;
-		while (copy[index])
-		{
+		while (copy[index++])
 			envp[index] = copy[index];
-			index++;
-		}
 		free(copy);
 		word_index++;
 	}

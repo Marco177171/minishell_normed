@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 15:34:12 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:22:04 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void		ft_trunc(t_command *c_s, int p_i, char **envp, int *i);
 void		ft_append(t_command *c_s, int p_i, char **envp, int *i);
 void		ft_redirect_input(t_command *c_s, int p_i, char **envp, int *index);
 void		ft_input_redirect(t_command *c_s, int p_i, char **envp, int *i);
+int			ft_check_token(t_command *c_s, int *i);
 void		ft_heredoc(t_command *c_s, int p_i, char **envp, int *i);
 char		*ft_remove_heredoc(char *pipe);
 char		**ft_decrease_word_matrix(char **word_matrix);

@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:40 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 15:45:07 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:24:15 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,33 @@ char	*ft_remove_heredoc(char *pipe)
 	return (updated);
 }
 
+int	ft_cycle_here(char *interrupter, int pipes[2])
+{
+	char	*sub_readline;
+
+	sub_readline = readline("> ");
+	if (ft_strcmp(sub_readline, interrupter) == 0)
+	{
+		write(pipes[1], "\0", 1);
+		free(sub_readline);
+		return (1);
+	}
+	else
+	{
+		write(pipes[1], sub_readline, ft_strlen(sub_readline));
+		write(pipes[1], "\n", 1);
+		free(sub_readline);
+	}
+	return (0);
+}
+
 void	ft_heredoc(t_command *c_s, int p_i, char **envp, int *i)
 {
 	char	*interrupter;
-	char	*sub_readline;
 	int		pipes[2];
 
-	if (c_s->word_matrix[(*i) + 1] == NULL)
-	{
-		ft_unexpected_token();
+	if (ft_check_token(c_s, i) == 1)
 		return ;
-	}
 	else
 	{
 		interrupter = strdup(c_s->word_matrix[(*i) + 1]);
@@ -49,19 +65,8 @@ void	ft_heredoc(t_command *c_s, int p_i, char **envp, int *i)
 		pipe(pipes);
 		while (1)
 		{
-			sub_readline = readline("> ");
-			if (ft_strcmp(sub_readline, interrupter) == 0)
-			{
-				write(pipes[1], "\0", 1);
-				free(sub_readline);
+			if (ft_cycle_here(interrupter, pipes) == 1)
 				break ;
-			}
-			else
-			{
-				write(pipes[1], sub_readline, ft_strlen(sub_readline));
-				write(pipes[1], "\n", 1);
-				free(sub_readline);
-			}
 		}
 		close(pipes[1]);
 		dup2(pipes[0], STDIN_FILENO);

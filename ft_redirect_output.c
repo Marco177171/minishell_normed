@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:28 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 15:25:28 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:25:09 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ft_trunc(t_command *c_s, int p_i, char **envp, int *i)
 	ft_red_exe(c_s, p_i, envp, fd, outcpy);
 }
 
-void ft_redirect_output(t_command *c_s, int p_i, char **envp, int *index)
+void	ft_redirect_output(t_command *c_s, int p_i, char **envp, int *index)
 {
 	if (ft_strcmp(c_s->word_matrix[(*index)], ">>") == 0)
 		ft_append(c_s, p_i, envp, index);

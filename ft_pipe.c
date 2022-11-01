@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:19:47 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 15:30:12 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:09:59 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	ft_manage_pipes(t_command *c_s, char **envp)
 
 	stdin_cpy = dup(0);
 	stdout_cpy = dup(1);
-	index = 0;
+	index = -1;
 	pid = malloc(sizeof(int) * c_s->total_pipes);
-	while (index < c_s->total_pipes)
+	while (++index < c_s->total_pipes)
 	{
 		pipe(pipes);
 		c_s->word_matrix = ft_split(c_s->pipe_matrix[index], ' ');
@@ -79,7 +79,6 @@ void	ft_manage_pipes(t_command *c_s, char **envp)
 			close(pipes[1]);
 			ft_free_matrix(c_s->word_matrix);
 		}
-		index++;
 	}
 	dup2(stdin_cpy, 0);
 	close(stdin_cpy);
