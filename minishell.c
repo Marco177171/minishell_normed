@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 19:44:41 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:13:55 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,37 +36,42 @@ int	ft_recognize_command(t_command *c_s, int p_i, char **envp)
 	return (0);
 }
 
-void	ft_remove_quotes(char *command)
+char	*ft_create_temp(char *command, char *result)
 {
 	int		index;
 	int		res_index;
-	char	*result;
 	char	quote;
 
 	index = -1;
 	res_index = 0;
+	while (command[++index])
+	{
+		if (command[index] == '"' || command[index] == '\'')
+		{
+			quote = command[index];
+			while (command[++index] != quote)
+				result[res_index++] = command[index];
+		}
+		else
+			result[res_index++] = command[index];
+	}
+	result[res_index] = '\0';
+	return (result);
+}
+
+void	ft_remove_quotes(char *command)
+{
+	char	*result;
+
 	if (ft_check_quote(command) == 1)
 	{
 		result = malloc(sizeof(char) * ft_strlen(command) + 1);
-		while (command[++index])
-		{
-			if (command[index] == '"' || command[index] == '\'')
-			{
-				quote = command[index];
-				while (command[++index] != quote)
-					result[res_index++] = command[index];
-			}
-			else
-				result[res_index++] = command[index];
-		}
-		result[res_index] = '\0';
+		result = ft_create_temp(command, result);
 		free (command);
 		command = ft_strdup(result);
 		free(result);
 		return ;
 	}
-	else
-		return ;
 }
 
 void	ft_init_struct(t_command *command_struct)
@@ -82,75 +87,6 @@ void	ft_init_struct(t_command *command_struct)
 	command_struct->total_pipes = 0;
 	g_exit_status = malloc(sizeof(int) * 1);
 }
-
-// void	ft_execute_cycle(t_command *c_s, char **envp)
-// {
-// 	char	*swap;
-// 	char	*sub_readline;
-
-// 	swap = NULL;
-// 	sub_readline = NULL;
-// 	c_s->command_string = readline("minishell$ ");
-// 	if (!c_s->command_string)
-// 		ft_exit_on_signal();
-// 	if (c_s->command_string[0] != '\0')
-// 	{
-// 		if (ft_check_quote(c_s->command_string) != 1)
-// 		{
-// 			add_history(c_s->command_string);
-// 			printf("error: close your quotes\n");
-// 			free(c_s->command_string);
-// 			return ;
-// 		}
-// 		if (ft_check_syntax(c_s->command_string) == 1)
-// 		{
-// 			add_history(c_s->command_string);
-// 			free(c_s->command_string);
-// 			return ;
-// 		}
-// 		else if (ft_check_syntax(c_s->command_string) == 2)
-// 		{
-// 			while (ft_check_syntax(c_s->command_string) == 2)
-// 			{
-// 				sub_readline = readline("> ");
-// 				swap = ft_strjoin(c_s->command_string, sub_readline);
-// 				free(c_s->command_string);
-// 				c_s->command_string = ft_strdup(swap);
-// 				free(swap);
-// 				free(sub_readline);
-// 				if (ft_check_syntax(c_s->command_string) == 1)
-// 				{
-// 					free(c_s->command_string);
-// 					return ;
-// 				}
-// 			}
-// 		}
-// 		add_history(c_s->command_string);
-// 		c_s->total_pipes = ft_count_pipes(c_s->command_string);
-// 		c_s->pipe_matrix = ft_split_pipes(c_s->command_string, '|');
-// 		if (c_s->total_pipes > 1)
-// 			ft_manage_pipes(c_s, envp);
-// 		else
-// 		{
-// 			c_s->word_matrix = ft_split(c_s->pipe_matrix[0], ' ');
-// 			ft_remove_quotes(c_s->word_matrix[0]);
-// 			if (ft_check_redirection(c_s->word_matrix) == 1)
-// 			{
-// 				ft_redirect(c_s, 0, envp);
-// 				ft_free_matrix(c_s->word_matrix);
-// 				ft_free_matrix(c_s->pipe_matrix);
-// 				free(c_s->command_string);
-// 				return ;
-// 			}
-// 			ft_recognize_command(c_s, 0, envp);
-// 			ft_free_matrix(c_s->word_matrix);
-// 			ft_free_matrix(c_s->pipe_matrix);
-// 			free(c_s->command_string);
-// 		}
-// 	}
-// 	else
-// 		free(c_s->command_string);
-// }
 
 int	main(int ac, char **av, char **envp)
 {

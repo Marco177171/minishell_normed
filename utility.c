@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:46:29 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/11/02 15:50:16 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 20:14:25 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_print_matrix(char **matrix)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (matrix[index++])
