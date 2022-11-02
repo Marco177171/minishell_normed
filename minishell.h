@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 17:45:23 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:45:33 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ void		ft_arg_not_found(char *str);
 void		ft_unexpected_token(void);
 void		ft_export_error(char *identifier);
 
+// CYCLE
+void		ft_execute_cycle(t_command *c_s, char **envp);
+
 // UTILITY
 int			ft_check_quotes(char *str);
 void		ft_free_matrix(char **m);
@@ -62,6 +65,9 @@ int			ft_modify_var(char *new_couple, char **envp);
 void		ft_exit_on_signal(void);
 void		ft_print_matrix(char **matrix); // eliminare
 
+// CHECK SYNTAX
+int			ft_check_syntax(char *command);
+
 // CD
 int			ft_cd(t_command *command_struct);
 int			ft_find_dest_len(char *path);
@@ -73,6 +79,9 @@ char		**ft_split_pipes(const char *s, char c);
 int			count_strings_pipes(const char *s, char c);
 void		ft_quote_control(const char *s, int *i, char *word);
 int			skip_quotes(const char *s, char quote);
+int			ft_check_redirection(char **word_struct);
+void		ft_dup_and_close(int *stdin_cpy, int *stdout_cpy);
+void		ft_wait_and_free(int *index, t_command *c_s, int *pid);
 
 // REDIRECTIONS
 int			ft_check_redirection(char **word_struct);

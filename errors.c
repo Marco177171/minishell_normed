@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/18 15:28:51 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 16:37:47 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:34:52 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_command_not_found(char *str)
 	write(2, "minishell: ", 11);
 	write(2, str, ft_strlen(str));
 	write(2, ": command not found\n", 20);
+	*g_exit_status = 127;
 }
 
 void	ft_arg_not_found(char *str)
@@ -30,6 +31,7 @@ void	ft_arg_not_found(char *str)
 	write(2, "minishell: ", 11);
 	write(2, str, ft_strlen(str));
 	write(2, ": No such file or directory\n", 28);
+	*g_exit_status = 1;
 }
 
 void	ft_syntax_error(char c)
