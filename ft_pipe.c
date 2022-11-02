@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:19:47 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 16:09:59 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:46:17 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,23 @@ int	ft_check_redirection(char **word_struct)
 		index++;
 	}
 	return (0);
+}
+
+void	ft_dup_and_close(int *stdin_cpy, int *stdout_cpy)
+{
+	dup2(*stdin_cpy, 0);
+	close(*stdin_cpy);
+	close(*stdout_cpy);
+}
+
+void	ft_wait_and_free(int *index, t_command *c_s, int *pid)
+{
+	(*index) = -1;
+	while (++(*index) < c_s->total_pipes)
+		waitpid(pid[(*index)], 0, 0);
+	free(pid);
+	free(c_s->command_string);
+	ft_free_matrix(c_s->pipe_matrix);
 }
 
 void	ft_manage_pipes(t_command *c_s, char **envp)
@@ -80,13 +97,6 @@ void	ft_manage_pipes(t_command *c_s, char **envp)
 			ft_free_matrix(c_s->word_matrix);
 		}
 	}
-	dup2(stdin_cpy, 0);
-	close(stdin_cpy);
-	close(stdout_cpy);
-	index = -1;
-	while (++index < c_s->total_pipes)
-		waitpid(pid[index], 0, 0);
-	free(pid);
-	free(c_s->command_string);
-	ft_free_matrix(c_s->pipe_matrix);
+	ft_dup_and_close(&stdin_cpy, &stdout_cpy);
+	ft_wait_and_free(&index, c_s, pid);
 }

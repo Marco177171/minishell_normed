@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 16:44:01 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:45:23 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,9 @@ int			ft_find_home_len(char *path);
 // PIPES
 void		ft_manage_pipes(t_command *c_s, char **envp);
 char		**ft_split_pipes(const char *s, char c);
+int			count_strings_pipes(const char *s, char c);
+void		ft_quote_control(const char *s, int *i, char *word);
+int			skip_quotes(const char *s, char quote);
 
 // REDIRECTIONS
 int			ft_check_redirection(char **word_struct);
