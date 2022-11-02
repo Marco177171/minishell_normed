@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:28 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 17:47:13 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:40:02 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,28 @@
 
 void	ft_append(t_command *c_s, int p_i, char **envp, int *i)
 {
-	int	outcpy;
 	int	fd;
 
-	outcpy = dup(1);
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
 		return ;
 	}
 	fd = open(c_s->word_matrix[(*i) + 1], O_APPEND | O_CREAT | O_WRONLY, 0644);
-	ft_red_exe(c_s, p_i, envp, fd, outcpy);
+	ft_red_exe(c_s, p_i, envp, fd);
 }
 
 void	ft_trunc(t_command *c_s, int p_i, char **envp, int *i)
 {
-	int	outcpy;
 	int	fd;
 
-	outcpy = dup(1);
 	if (c_s->word_matrix[(*i) + 1] == NULL)
 	{
 		ft_unexpected_token();
 		return ;
 	}
 	fd = open(c_s->word_matrix[(*i) + 1], O_TRUNC | O_CREAT | O_WRONLY, 0644);
-	ft_red_exe(c_s, p_i, envp, fd, outcpy);
+	ft_red_exe(c_s, p_i, envp, fd);
 }
 
 void	ft_redirect_output(t_command *c_s, int p_i, char **envp, int *index)

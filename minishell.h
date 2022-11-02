@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 18:00:48 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:44:01 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void		ft_remove_quotes(char *command);
 void		ft_manage_signals(void);
 int			ft_modify_var(char *new_couple, char **envp);
 void		ft_exit_on_signal(void);
+void		ft_print_matrix(char **matrix); // eliminare
 
 // CD
 int			ft_cd(t_command *command_struct);
@@ -78,14 +79,15 @@ void		ft_redirect_output(t_command *c_s, int p_i, char **envp, int *index);
 void		ft_trunc(t_command *c_s, int p_i, char **envp, int *i);
 void		ft_append(t_command *c_s, int p_i, char **envp, int *i);
 void		ft_redirect_input(t_command *c_s, int p_i, char **envp, int *index);
-void		ft_input_redirect(t_command *c_s, int p_i, char **envp, int *i);
+int			ft_input_redirect(t_command *c_s, int *fd, int *i);
 int			ft_check_token(t_command *c_s, int *i);
 void		ft_heredoc(t_command *c_s, int p_i, char **envp, int *i);
 char		*ft_remove_heredoc(char *pipe);
 void		ft_new_matrix(char **w_m, int *i, char **temp_matrix, int *temp_index);
 char		**ft_decrease_word_matrix(char **word_matrix);
 char		*ft_update_pipe_text(char *pipe);
-void		ft_red_exe(t_command *c_s, int p_i, char **envp, int fd, int stdoutcpy);
+void		ft_red_exe(t_command *c_s, int p_i, char **envp, int fd);
+int			ft_find_quotes(char *word);
 
 // ECHO
 int			ft_echo(t_command *c_s, int p_i);

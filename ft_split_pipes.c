@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/20 10:16:17 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/21 17:31:42 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:54:07 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,29 @@ int	count_strings_pipes(const char *s, char c)
 	return (str_count);
 }
 
+void	ft_quote_control(const char *s, int *i, char *word)
+{
+	char	quote;
+
+	if (s[(*i)] == '\'' || s[(*i)] == '"')
+	{
+		quote = s[(*i)];
+		word[(*i)] = s[(*i)];
+		(*i)++;
+		while (s[(*i)] != quote)
+		{
+			word[(*i)] = s[(*i)];
+			(*i)++;
+		}
+		word[(*i)] = s[(*i)];
+	}
+	else
+		word[(*i)] = s[(*i)];
+}
+
 char	*malloc_strings_pipes(const char *s, char c)
 {
 	char	*word;
-	char	quote;
 	int		i;
 
 	i = 0;
@@ -63,20 +82,7 @@ char	*malloc_strings_pipes(const char *s, char c)
 	i = 0;
 	while (s[i] && s[i] != c)
 	{
-		if (s[i] == '\'' || s[i] == '"')
-		{
-			quote = s[i];
-			word[i] = s[i];
-			i++;
-			while (s[i] != quote)
-			{
-				word[i] = s[i];
-				i++;
-			}
-			word[i] = s[i];
-		}
-		else
-			word[i] = s[i];
+		ft_quote_control(s, &i, word);
 		i++;
 	}
 	word[i] = '\0';

@@ -6,11 +6,20 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:46:29 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/10/26 17:16:33 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:50:16 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_print_matrix(char **matrix)
+{
+	int index;
+
+	index = 0;
+	while (matrix[index++])
+		printf("%s\n", matrix[index]);
+}
 
 int	ft_count_pipes(char *str)
 {

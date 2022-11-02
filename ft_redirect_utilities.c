@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/01 16:21:17 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 18:01:54 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/02 16:43:35 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,33 @@ int	ft_check_token(t_command *c_s, int *i)
 		return (1);
 	}
 	return (0);
+}
+
+int	ft_find_quotes(char *word)
+{
+	int		index;
+	int		flag;
+	char	quote;
+
+	index = -1;
+	flag = 0;
+	while (word[++index])
+	{
+		if (word[index] == '\'' || word[index] == '\"')
+		{
+			flag = 1;
+			quote = word[index];
+			while (word[++index])
+			{
+				if (word[index] == quote)
+				{
+					flag = 0;
+					break ;
+				}
+			}
+		}
+	}
+	return (flag);
 }
 
 void	ft_new_matrix(char **w_m, int *i, char **temp_matrix, int *temp_index)
