@@ -1,0 +1,70 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expander.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/05 20:21:59 by masebast          #+#    #+#             */
+/*   Updated: 2022/11/05 20:42:35 by masebast         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "minishell.h"
+
+char	*ft_return_value(char *key_couple)
+{
+	char **couple;
+
+	couple = ft_split(key_couple, '=');
+	free(couple[0]);
+	return (couple[1]);
+}
+
+char	*ft_env_expander(char *key, char **env_copy)
+{
+	int	index;
+
+	index = 0;
+	while (env_copy[index])
+	{
+		if (ft_strncmp(key, env_copy[index], ft_strlen(key)) == 0)
+		{
+			free (key);
+			return (ft_return_value(env_copy[index]));
+		}
+		index++;
+	}
+	return (key);
+}
+
+char	*ft_return_expanded(char *string, t_command *c_s)
+{
+	int		index;
+	int		var_index;
+	char	*may_be_var;
+
+	index = 1;
+	var_index = 0;
+	may_be_var = malloc(sizeof(char) * ft_strlen(string));
+	while (string[index])
+		may_be_var[var_index++] = string[index++];
+	may_be_var[var_index] = '\0';
+	free (string);
+	may_be_var = ft_env_expander(may_be_var, c_s->envp_copy);
+	return (may_be_var);
+}
+
+char	**ft_expand_dollar(char **word_matrix, t_command *c_s)
+{
+	int index;
+
+	index = 0;
+	while (word_matrix[index])
+	{
+		if (word_matrix[index][0] == '$')
+			word_matrix[index] = ft_return_expanded(word_matrix[index], c_s);
+		index++;
+	}
+	return (word_matrix);
+}

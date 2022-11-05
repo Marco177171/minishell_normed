@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 19:44:46 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 20:07:10 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:30:37 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_open_pipe(t_command *c_s)
 void	ft_direction(t_command *c_s, char **envp)
 {
 	c_s->word_matrix = ft_split(c_s->pipe_matrix[0], ' ');
+	ft_expand_dollar(c_s->word_matrix, c_s);
 	ft_remove_quotes(c_s->word_matrix[0]);
 	if (ft_check_redirection(c_s->word_matrix) == 1)
 	{

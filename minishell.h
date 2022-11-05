@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 19:42:04 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:41:06 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_command {
 // INIT
 void		ft_init_struct(t_command *command_struct, char **envp);
 char		*ft_getenv_copy(char *key, char **envp_copy);
+char		**ft_expand_dollar(char **word_matrix, t_command *c_s);
 
 // ERRORS
 void		ft_error(void);
