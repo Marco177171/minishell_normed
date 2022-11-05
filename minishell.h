@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 20:15:38 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 19:05:43 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	*g_exit_status;
 
 typedef struct s_command {
 	char	*current_shell_level;
+	char	**envp_copy;
 	char	*command_string;
 	char	**pipe_matrix;
 	char	**word_matrix;
@@ -40,6 +41,9 @@ typedef struct s_command {
 	int		read_fd;
 	char	*operator;
 }	t_command;
+
+// INIT
+void		ft_init_struct(t_command *command_struct, char **envp);
 
 // ERRORS
 void		ft_error(void);

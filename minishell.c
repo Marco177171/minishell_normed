@@ -6,7 +6,7 @@
 /*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 17:01:50 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/05 19:22:51 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,20 +74,6 @@ void	ft_remove_quotes(char *command)
 	}
 }
 
-void	ft_init_struct(t_command *command_struct)
-{
-	char	*value;
-
-	value = ft_itoa(ft_atoi(getenv("SHLVL")) + 1);
-	command_struct->current_shell_level = ft_strjoin("SHLVL=", value);
-	free(value);
-	command_struct->write_fd = 1;
-	command_struct->pipes[0] = 0;
-	command_struct->pipes[1] = 1;
-	command_struct->total_pipes = 0;
-	g_exit_status = malloc(sizeof(int) * 1);
-}
-
 int	main(int ac, char **av, char **envp)
 {
 	t_command	command_struct;
@@ -95,8 +81,8 @@ int	main(int ac, char **av, char **envp)
 	av = NULL;
 	if (ac == 1)
 	{
-		ft_init_struct(&command_struct);
-		ft_modify_var(command_struct.current_shell_level, envp);
+		ft_init_struct(&command_struct, envp);
+		ft_modify_var(command_struct.current_shell_level, command_struct.envp_copy);
 		ft_ctrl_c(envp);
 		*g_exit_status = 0;
 		while (TRUE)
