@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 19:05:43 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/05 19:42:04 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_command {
 
 // INIT
 void		ft_init_struct(t_command *command_struct, char **envp);
+char		*ft_getenv_copy(char *key, char **envp_copy);
 
 // ERRORS
 void		ft_error(void);
