@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 19:01:41 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/11/05 20:22:44 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:46:02 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_create_envp_copy(char **envp)
 
 char	*ft_getenv_copy(char *key, char **envp_copy)
 {
-	int 	index;
+	int		index;
 	char	**couple;
 	char	*result;
 
@@ -61,11 +61,9 @@ void	ft_init_struct(t_command *command_struct, char **envp)
 	free(value);
 	ft_modify_var(command_struct->current_shell_level, envp);
 	command_struct->envp_copy = ft_create_envp_copy(envp);
-	// value = ft_itoa(ft_atoi(ft_getenv_copy("SHLVL=", command_struct->envp_copy)) + 1);
 	command_struct->write_fd = 1;
 	command_struct->pipes[0] = 0;
 	command_struct->pipes[1] = 1;
 	command_struct->total_pipes = 0;
 	g_exit_status = malloc(sizeof(int) * 1);
-	// ft_print_matrix(command_struct->envp_copy);
 }

@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 20:21:59 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 20:42:35 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:46:32 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*ft_return_value(char *key_couple)
 {
-	char **couple;
+	char	**couple;
 
 	couple = ft_split(key_couple, '=');
 	free(couple[0]);
@@ -57,7 +57,7 @@ char	*ft_return_expanded(char *string, t_command *c_s)
 
 char	**ft_expand_dollar(char **word_matrix, t_command *c_s)
 {
-	int index;
+	int	index;
 
 	index = 0;
 	while (word_matrix[index])
