@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/30 18:43:21 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 17:57:43 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@ void	ft_doll_arg(char *str, int *index, int fd)
 
 int	ft_print_doll(char *str, int fd)
 {
-	int		index;
+	int	index;
 
 	index = 1;
-	if (str[index] == '"' || str[index] == ' '
-		|| str[index] == '$' || str[index] == '\0')
-		return (write(fd, &str[index], 1));
-	else
+	if (str[index] == '"' || str[index] == ' ' || \
+		str[index] == '\'' || str[index] == '$' || str[index] == '\0'){
+			printf("|%s|\n", &str[index]);
+			return (write(fd, &str[index], 1));
+		}
+	else if (ft_isalpha(str[index]) || str[index] == '?')
 		ft_doll_arg(str, &index, fd);
 	return (index);
 }
@@ -86,22 +88,3 @@ char	*ft_adjust_pipe(char *pipe)
 	free(pipe);
 	return (new_pipe);
 }
-
-// if (pipe[index] == ' ')
-// 	index++;
-// else
-// {
-// 	while (pipe[index] != ' ')
-// 	{
-// 		if (pipe[index] == '\'' || pipe[index] == '\"')
-// 			index++;
-// 		else
-// 		{
-// 			new_pipe[result_index] = pipe[index];
-// 			result_index++;
-// 			index++;
-// 		}
-// 	}
-// 	break ;
-// }
-// index++;

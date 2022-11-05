@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 18:22:55 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/29 16:11:31 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 17:49:44 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	ft_print_echo(t_command *c_s, char *command, int *i)
 			*i += ft_print_single(command + *i, c_s->write_fd);
 		else if (command[*i] == '"')
 			*i += ft_print_double(command + *i, c_s->write_fd);
-		else if (command[*i] == '$')
+		else if (command[*i] == '$' && command[*i + 1] != ' ' \
+			&& command[*i + 1])
 			*i += (ft_print_doll(command + *i, c_s->write_fd));
 		else if (command[*i] == '>'
 			|| command[*i] == '<')

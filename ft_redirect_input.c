@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirect_input.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 18:44:40 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 15:52:52 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 15:19:08 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_cycle_here(char *interrupter, int pipes[2])
 	while (1)
 	{
 		sub_read = readline("> ");
-		if (ft_strcmp(sub_read, interrupter) == 0)
+		if (sub_read && ft_strcmp(sub_read, interrupter) == 0)
 		{
 			write(pipes[1], "\0", 1);
 			free(sub_read);
@@ -44,6 +44,8 @@ void	ft_cycle_here(char *interrupter, int pipes[2])
 		}
 		else
 		{
+			if (sub_read == NULL)
+				break ;
 			write(pipes[1], sub_read, ft_strlen(sub_read));
 			write(pipes[1], "\n", 1);
 			free(sub_read);

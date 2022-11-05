@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 20:13:55 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 17:01:50 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_remove_quotes(char *command)
 	{
 		result = malloc(sizeof(char) * ft_strlen(command) + 1);
 		result = ft_create_temp(command, result);
-		free (command);
+		free(command);
 		command = ft_strdup(result);
 		free(result);
 		return ;

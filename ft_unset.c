@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:03:21 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 16:30:49 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 15:44:10 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	**ft_create_freed_copy(char **envp, int index)
 	char	**result;
 
 	i = 0;
-	while (envp[i++])
+	while (envp[i])
+		i++;
 	result = malloc(sizeof(char *) * i - 1);
 	result[i - 1] = NULL;
 	i = 0;
@@ -32,7 +33,7 @@ char	**ft_create_freed_copy(char **envp, int index)
 			i++;
 		}
 		else
-			result[j++] = envp[i++];
+			result[j++] = (envp[i++]);
 	}
 	return (result);
 }
