@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 19:01:41 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/11/05 19:51:21 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/05 20:01:19 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ void	ft_init_struct(t_command *command_struct, char **envp)
 	command_struct->pipes[1] = 1;
 	command_struct->total_pipes = 0;
 	g_exit_status = malloc(sizeof(int) * 1);
-	ft_print_matrix(command_struct->envp_copy);
+	// ft_print_matrix(command_struct->envp_copy);
 }

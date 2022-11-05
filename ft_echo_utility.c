@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 18:57:10 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/05 20:15:38 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int	ft_print_doll(char *str, int fd)
 	int	index;
 
 	index = 1;
-	if (str[index] == '"' || str[index] == ' ' || \
-		str[index] == '\'' || str[index] == '$' || str[index] == '\0'){
+	if (str[index] == ' ' || \
+		str[index] == '$' || str[index] == '\0'){
 			// printf("|%s|\n", &str[index]);
 			return (write(fd, &str[index], 1));
 		}
