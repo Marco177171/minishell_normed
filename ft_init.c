@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 19:01:41 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/11/05 20:46:02 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/06 15:25:06 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,12 @@ char	**ft_create_envp_copy(char **envp)
 	i = 0;
 	while (envp[i])
 		i++;
-	result = malloc(sizeof(char *) * i - 1);
+	result = malloc(sizeof(char *) * i);
 	i = 0;
 	j = 0;
 	while (envp[i] != NULL)
 		result[j++] = ft_strdup(envp[i++]);
-	result[i - 1] = NULL;
+	result[i] = NULL;
 	return (result);
 }
 
