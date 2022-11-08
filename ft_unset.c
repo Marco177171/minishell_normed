@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 18:03:21 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 19:08:12 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/08 17:12:35 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,13 @@ char	**ft_create_freed_copy(char **envp, int index)
 
 char	**ft_find_in_envp(char *key, char **envp)
 {
-	int		index;
-	char	**couple;
+	int	index;
 
 	index = 0;
 	while (envp[index])
 	{
-		couple = ft_split(envp[index], '=');
-		if (strncmp(key, couple[0], ft_strlen(couple[0])) == 0)
-		{
-			ft_free_matrix(couple);
+		if (strncmp(key, envp[index], ft_strlen(key)) == 0)
 			return (ft_create_freed_copy(envp, index));
-		}
-		ft_free_matrix(couple);
 		index++;
 	}
 	return (envp);

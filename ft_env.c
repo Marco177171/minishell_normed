@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 19:17:10 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/10/25 18:56:30 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 17:25:12 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,18 @@ int	ft_env(t_command *command_struct, char **envp)
 {
 	int	index;
 
-	command_struct = NULL;
 	index = 0;
-	if (!envp)
+	if (command_struct->word_matrix[1])
 	{
-		*g_exit_status = 1;
-		return (1);
-	}
-	else
-	{
-		while (envp[index])
-		{
-			if (ft_check_equal_presence(envp[index]) == 1)
-				printf("%s\n", envp[index]);
-			index++;
-		}
-		*g_exit_status = 0;
+		ft_arg_not_found(command_struct->word_matrix[1]);
 		return (0);
 	}
+	while (envp[index])
+	{
+		if (ft_check_equal_presence(envp[index]) == 1)
+			printf("%s\n", envp[index]);
+		index++;
+	}
+	*g_exit_status = 0;
+	return (0);
 }
