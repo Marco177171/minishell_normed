@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/06 15:44:54 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:39:55 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,11 @@ int			ft_find_quotes(char *word);
 
 // ECHO
 int			ft_echo(t_command *c_s, int p_i);
-int			ft_print_doll(char *str, int fd);
+int			ft_print_doll(char *str, int fd, char **env_copy);
 char		*ft_adjust_pipe(char *pipe);
 int			ft_check_quote(char *str);
 void		ft_print_exit(void);
-int			ft_print_double(char *string, int fd);
+int			ft_print_double(char *string, int fd, char **env_copy);
 int			ft_print_single(char *string, int fd);
 
 // BUILTINS

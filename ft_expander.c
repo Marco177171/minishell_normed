@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/05 20:21:59 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/06 15:41:35 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:11:00 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ char	*ft_env_expander(char *key, char **env_copy)
 	int	index;
 
 	index = 0;
+	if (ft_strcmp(key, "?") == 0)
+	{
+		free(key);
+		return (ft_itoa(*g_exit_status));
+	}
 	while (env_copy[index])
 	{
 		if (ft_strncmp(key, env_copy[index], ft_strlen(key)) == 0)

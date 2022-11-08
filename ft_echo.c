@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 18:22:55 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 17:49:44 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/08 15:40:20 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ void	ft_print_echo(t_command *c_s, char *command, int *i)
 		if (command[*i] == '\'')
 			*i += ft_print_single(command + *i, c_s->write_fd);
 		else if (command[*i] == '"')
-			*i += ft_print_double(command + *i, c_s->write_fd);
+			*i += ft_print_double(command + *i, c_s->write_fd, c_s->envp_copy);
 		else if (command[*i] == '$' && command[*i + 1] != ' ' \
 			&& command[*i + 1])
-			*i += (ft_print_doll(command + *i, c_s->write_fd));
+			*i += (ft_print_doll(command + *i, c_s->write_fd, c_s->envp_copy));
 		else if (command[*i] == '>'
 			|| command[*i] == '<')
 			break ;

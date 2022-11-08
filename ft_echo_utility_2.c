@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 15:26:53 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/11/05 20:08:04 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:40:35 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_print_single(char *string, int fd)
 	return (index);
 }
 
-int	ft_print_double(char *string, int fd)
+int	ft_print_double(char *string, int fd, char **env_copy)
 {
 	int	index;
 
@@ -34,7 +34,7 @@ int	ft_print_double(char *string, int fd)
 	while (string[index] != '"')
 	{
 		if (string[index] == '$')
-			index += ft_print_doll(string + index, fd);
+			index += ft_print_doll(string + index, fd, env_copy);
 		else
 		{
 			write(fd, &string[index], 1);

@@ -6,13 +6,34 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 20:17:08 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:45:01 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_doll_arg(char *str, int *index, int fd)
+char	*ft_find_in_copy(char *env_var, char **env_copy)
+{
+	int		index;
+	char	**couple;
+	char	*result;
+
+	index = 0;
+	couple = NULL;
+	while (env_copy[index++])
+	{
+		if (strncmp(env_var, env_copy[index], ft_strlen(env_var)) == 0)
+		{
+			couple = ft_split(env_copy[index], '=');
+			break ;
+		}
+	}
+	result = ft_strdup(couple[1]);
+	ft_free_matrix(couple);
+	return (result);
+}
+
+void	ft_doll_arg(char *str, int *index, int fd, char **env_copy)
 {
 	char	env_var_name[1024];
 	int		env_var_len;
@@ -29,14 +50,15 @@ void	ft_doll_arg(char *str, int *index, int fd)
 		&& str[*index] != '$' && str[*index] != '\'' && str[*index])
 		env_var_name[env_var_len++] = str[(*index)++];
 	env_var_name[env_var_len] = '\0';
-	env = getenv(env_var_name);
+	env = ft_find_in_copy(env_var_name, env_copy);
 	if (env != NULL)
 		write(fd, env, strlen(env));
 	else if (!env_var_name[0])
 		write(fd, "$", 1);
+	free(env);
 }
 
-int	ft_print_doll(char *str, int fd)
+int	ft_print_doll(char *str, int fd, char **env_copy)
 {
 	int	index;
 
@@ -44,7 +66,7 @@ int	ft_print_doll(char *str, int fd)
 	if (str[index] == ' ' || str[index] == '$' || str[index] == '\0')
 		return (write(fd, &str[index], 1));
 	else if (ft_isalpha(str[index]) || str[index] == '?')
-		ft_doll_arg(str, &index, fd);
+		ft_doll_arg(str, &index, fd, env_copy);
 	return (index);
 }
 

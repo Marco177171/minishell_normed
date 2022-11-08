@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 18:19:47 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/06 15:43:41 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:17:13 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ft_son(t_command *c_s, int index, char **envp, int pipes[2])
 	int	stdout_cpy;
 
 	stdout_cpy = dup(1);
+	ft_expand_dollar(c_s->word_matrix, c_s);
 	if (ft_check_redirection(c_s->word_matrix) == 1)
 		ft_close_son(c_s, pipes, index, envp);
 	else
