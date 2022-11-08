@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/08 15:45:01 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:41:11 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,23 @@ char	*ft_find_in_copy(char *env_var, char **env_copy)
 
 	index = 0;
 	couple = NULL;
-	while (env_copy[index++])
+	while (env_copy[index])
 	{
-		if (strncmp(env_var, env_copy[index], ft_strlen(env_var)) == 0)
+		printf("%s\n", env_copy[index]);
+		if (ft_strncmp(env_var, env_copy[index], ft_strlen(env_var)) == 0)
 		{
 			couple = ft_split(env_copy[index], '=');
-			break ;
+			if (couple)
+			{
+				result = ft_strdup(couple[1]);
+				ft_free_matrix(couple);
+				return (result);
+			}
+			ft_free_matrix(couple);
 		}
+		index++;
 	}
-	result = ft_strdup(couple[1]);
-	ft_free_matrix(couple);
-	return (result);
+	return (NULL);
 }
 
 void	ft_doll_arg(char *str, int *index, int fd, char **env_copy)
@@ -55,6 +61,8 @@ void	ft_doll_arg(char *str, int *index, int fd, char **env_copy)
 		write(fd, env, strlen(env));
 	else if (!env_var_name[0])
 		write(fd, "$", 1);
+	else if (!env)
+		return ;
 	free(env);
 }
 
