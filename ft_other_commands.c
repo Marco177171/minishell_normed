@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:29:07 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/01 16:02:52 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:31:48 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@ int	ft_execute_sub_process(t_command *c_s, char **envp)
 		return (1);
 	}
 	return (0);
+}
+
+void	ft_quit_130(int sig)
+{
+	if (sig == SIGINT)
+		write(1, "^C\n", 3);
+	return ;
 }
 
 void	ft_nephew(t_command *c_s, char **mypath, int *index, char **envp)
@@ -36,7 +43,10 @@ void	ft_nephew(t_command *c_s, char **mypath, int *index, char **envp)
 		exit(*g_exit_status);
 	}
 	else
+	{
+		signal(SIGINT, ft_quit_130);
 		*g_exit_status = execve(c_s->word_matrix[0], c_s->word_matrix, envp);
+	}
 	free(path);
 }
 
@@ -70,6 +80,7 @@ int	ft_other_commands(t_command *command_struct, char **envp)
 		ft_child(command_struct, envp);
 	else
 	{
+		signal(SIGINT, ft_quit_130);
 		waitpid(pid, &status, 0);
 		if (status != 0)
 			*g_exit_status = 127;

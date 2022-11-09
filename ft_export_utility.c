@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utility.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:40:00 by masebast          #+#    #+#             */
-/*   Updated: 2022/10/28 15:34:06 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/09 17:19:17 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,9 @@ char	**ft_create_envp2(char **envp)
 	envp2[index] = NULL;
 	if (!envp2)
 		return (NULL);
-	index = 0;
-	while (envp[index])
-	{
+	index = -1;
+	while (envp[++index])
 		envp2[index] = ft_strdup(envp[index]);
-		index++;
-	}
 	return (envp2);
 }
 

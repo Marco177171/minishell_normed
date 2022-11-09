@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 19:44:46 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/05 20:30:37 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:58:35 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ void	ft_open_pipe(t_command *c_s)
 void	ft_direction(t_command *c_s, char **envp)
 {
 	c_s->word_matrix = ft_split(c_s->pipe_matrix[0], ' ');
-	ft_expand_dollar(c_s->word_matrix, c_s);
 	ft_remove_quotes(c_s->word_matrix[0]);
+	ft_expand_dollar(c_s->word_matrix, c_s);
 	if (ft_check_redirection(c_s->word_matrix) == 1)
 	{
 		ft_redirect(c_s, 0, envp);
@@ -54,11 +54,34 @@ void	ft_direction(t_command *c_s, char **envp)
 	free(c_s->command_string);
 }
 
+int	ft_check_spaces_only(char *str)
+{
+	int	index;
+
+	index = -1;
+	while (str[++index])
+		if (str[index] != ' ')
+			return (0);
+	return (1);
+}
+
+int	ft_check_command_string(char *string)
+{
+	if (!string)
+		ft_exit_on_signal();
+	if (ft_check_spaces_only(string) == 1)
+	{
+		free(string);
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_execute_cycle(t_command *c_s, char **envp)
 {
 	c_s->command_string = readline("minishell$ ");
-	if (!c_s->command_string)
-		ft_exit_on_signal();
+	if (ft_check_command_string(c_s->command_string) == 1)
+		return ;
 	if (c_s->command_string[0] != '\0')
 	{
 		if (ft_check_quote(c_s->command_string) != 1)

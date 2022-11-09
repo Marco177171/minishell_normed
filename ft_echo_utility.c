@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/08 18:24:11 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:06:46 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,21 @@ char	*ft_find_in_copy(char *env_var, char **env_copy)
 	char	**couple;
 	char	*result;
 
-	index = 0;
+	index = -1;
 	couple = NULL;
-	while (env_copy[index])
+	while (env_copy[++index])
 	{
 		if (ft_strncmp(env_var, env_copy[index], ft_strlen(env_var)) == 0
 			&& ft_check_equal_presence(env_copy[index]) == 1)
 		{
 			couple = ft_split(env_copy[index], '=');
-			result = ft_strdup(couple[1]);
-			ft_free_matrix(couple);
-			return (result);
+			if (couple[1])
+			{
+				result = ft_strdup(couple[1]);
+				ft_free_matrix(couple);
+				return (result);
+			}
 		}
-		index++;
 	}
 	return (NULL);
 }

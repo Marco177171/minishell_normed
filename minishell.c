@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:12:49 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/08 17:15:01 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:49:57 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_recognize_command(t_command *c_s, int p_i, char **envp)
 {
+	if (c_s->word_matrix[0] == NULL)
+		return (0);
 	if (ft_strcmp("echo", c_s->word_matrix[0]) == 0)
 		return (ft_echo(c_s, p_i));
 	else if (ft_strcmp("cd", c_s->word_matrix[0]) == 0)

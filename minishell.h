@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/08 15:39:55 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/09 19:29:56 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,9 @@ void		ft_remove_quotes(char *command);
 void		ft_manage_signals(void);
 int			ft_modify_var(char *new_couple, char **envp);
 void		ft_exit_on_signal(void);
-void		ft_print_matrix(char **matrix); // eliminare
+
+// EXPANDER
+char		*ft_return_expanded(char *string, t_command *c_s);
 
 // CHECK SYNTAX
 int			ft_check_syntax(char *command);
