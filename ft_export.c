@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 10:59:12 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/09 20:28:55 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:12:22 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	ft_append_new_key(char **envp, char *new_key)
 	int	index;
 
 	index = 0;
+	if (ft_check_special(new_key) == 1)
+		ft_export_error(new_key);
 	while (envp[index])
 	{
 		if (ft_strncmp(envp[index], new_key, ft_strlen(new_key)) == 0)

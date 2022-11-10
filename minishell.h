@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 17:11:31 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/09 19:29:56 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:06:30 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ int			ft_check_char(char *str);
 void		ft_print_envp2(char **envp2);
 char		**ft_create_envp2(char **envp);
 void		ft_export_error(char *identifier);
+int			ft_check_special(char *var);
 
 // OTHER COMMANDS
 int			ft_other_commands(t_command *command_struct, char **envp);

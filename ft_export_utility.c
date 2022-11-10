@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export_utility.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 17:40:00 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/09 17:19:17 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:20:30 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_export_error(char *identifier)
 	write(2, "minishell: export: '", 20);
 	write(2, identifier, ft_strlen(identifier));
 	write(2, "': not a valild identifier\n", 27);
+	*g_exit_status = 1;
 }
 
 char	**ft_create_envp2(char **envp)
@@ -62,7 +63,8 @@ void	ft_print_envp2(char **envp2)
 
 int	ft_check_char(char *str)
 {
-	if ((str[0] >= 65 && str[0] <= 90) || (str[0] >= 97 && str[0] <= 122))
+	if ((str[0] >= 65 && str[0] <= 90) || (str[0] == 95) || \
+		(str[0] >= 97 && str[0] <= 122))
 		return (0);
 	return (1);
 }
