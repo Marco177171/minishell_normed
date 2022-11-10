@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirections.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:45:04 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/02 16:44:04 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 16:19:58 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	ft_red_hot_chili_pepper(t_command *c_s, int *index, int p_i, char **envp)
 
 void	ft_redirect(t_command *c_s, int p_i, char **envp)
 {
-	int		index;
+	int	index;
 
 	index = 0;
 	while (c_s->word_matrix[index])

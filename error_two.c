@@ -6,7 +6,7 @@
 /*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/10 14:38:35 by gmeoli            #+#    #+#             */
-/*   Updated: 2022/11/10 15:10:28 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/10 16:07:34 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ int	ft_check_special(char *var)
 	i = -1;
 	while (var[++i])
 	{
-		if ((var[i] >= 0 && var[i] <= 47) || (var[i] >= 58 && var[i] <= 64) \
-			|| (var[i] >= 91 && var[i] <= 94) || \
-			(var[i] >= 123 && var[i] <= 127))
+		if ((var[i] >= 0 && var[i] <= 47) || (var[i] >= 58 && var[i] <= 60) \
+			|| (var[i] >= 62 && var[i] <= 64) || \
+			(var[i] >= 91 && var[i] <= 94) || (var[i] >= 123 && var[i] <= 127))
 			return (1);
 	}
 	return (0);

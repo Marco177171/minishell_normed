@@ -6,7 +6,7 @@
 /*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:29:07 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/10 15:33:42 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/10 15:52:09 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	ft_quit_130(int sig)
 {
 	if (sig == SIGINT)
 		write(1, "^C\n", 3);
+	*g_exit_status = 130;
 	return ;
 }
 
@@ -79,7 +80,7 @@ int	ft_other_commands(t_command *command_struct, char **envp)
 	{
 		signal(SIGINT, ft_quit_130);
 		waitpid(pid, &status, 0);
-		if (status != 0)
+		if (status != 0 && *g_exit_status != 130)
 			*g_exit_status = 127;
 	}
 	return (1);
