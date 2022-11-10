@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/09 17:06:46 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:25:09 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_print_doll(char *str, int fd, char **env_copy)
 	index = 1;
 	if (str[index] == ' ' || str[index] == '$' || str[index] == '\0')
 		return (write(fd, &str[index], 1));
-	else if (ft_isalpha(str[index]) || str[index] == '?')
+	else if (ft_check_char(str) || str[index] == '?')
 		ft_doll_arg(str, &index, fd, env_copy);
 	return (index);
 }

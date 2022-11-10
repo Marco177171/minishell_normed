@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_other_commands.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 17:29:07 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/09 19:31:48 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 15:33:42 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ void	ft_nephew(t_command *c_s, char **mypath, int *index, char **envp)
 		exit(*g_exit_status);
 	}
 	else
-	{
-		signal(SIGINT, ft_quit_130);
 		*g_exit_status = execve(c_s->word_matrix[0], c_s->word_matrix, envp);
-	}
 	free(path);
 }
 
