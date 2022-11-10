@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute_cycle.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
+/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 19:44:46 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/09 17:58:35 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/10 14:30:12 by gmeoli           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,12 @@ void	ft_open_pipe(t_command *c_s)
 
 void	ft_direction(t_command *c_s, char **envp)
 {
+	int	i;
+
+	i = -1;
 	c_s->word_matrix = ft_split(c_s->pipe_matrix[0], ' ');
-	ft_remove_quotes(c_s->word_matrix[0]);
+	while (c_s->word_matrix[++i])
+		ft_remove_quotes(c_s->word_matrix[i]);
 	ft_expand_dollar(c_s->word_matrix, c_s);
 	if (ft_check_redirection(c_s->word_matrix) == 1)
 	{
