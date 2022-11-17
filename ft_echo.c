@@ -6,7 +6,7 @@
 /*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 18:22:55 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/08 15:40:20 by masebast         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:23:49 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	ft_print_echo(t_command *c_s, char *command, int *i)
 			break ;
 		else
 		{
-			write(c_s->write_fd, &command[*i], 1);
+			if (&command[*i] != '\0')
+				write(c_s->write_fd, &command[*i], 1);
 			(*i)++;
 		}
 	}

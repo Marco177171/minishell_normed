@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo_utility.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gmeoli <gmeoli@student.42.fr>              +#+  +:+       +#+        */
+/*   By: masebast <masebast@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 14:50:36 by masebast          #+#    #+#             */
-/*   Updated: 2022/11/10 15:25:09 by gmeoli           ###   ########.fr       */
+/*   Updated: 2022/11/17 14:08:43 by masebast         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ char	*ft_find_in_copy(char *env_var, char **env_copy)
 	couple = NULL;
 	while (env_copy[++index])
 	{
-		if (ft_strncmp(env_var, env_copy[index], ft_strlen(env_var)) == 0
+		if ((ft_strncmp(env_var, env_copy[index], ft_strlen(env_var)) == 0
+				&& env_copy[index][ft_strlen(env_var)] == '=')
 			&& ft_check_equal_presence(env_copy[index]) == 1)
 		{
 			couple = ft_split(env_copy[index], '=');
@@ -96,7 +97,7 @@ char	*ft_adjust_pipe(char *pipe)
 	found = 0;
 	result_index = 0;
 	index = 0;
-	new_pipe = malloc (sizeof(char) * ft_strlen(pipe));
+	new_pipe = malloc(sizeof(char) * ft_strlen(pipe));
 	while (pipe[index++])
 	{
 		if (found == 1 && ft_fill_new_pipe(pipe[index]) == 0)
