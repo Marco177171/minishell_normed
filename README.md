@@ -1,4 +1,4 @@
-# Minishell
+# Minishell | NORMED
 
 This project is a program that simulates the behavior of a bash shell, encompassing various features including pipes, redirections, and other core functionalities of the Bash command-line interpreter.
 
